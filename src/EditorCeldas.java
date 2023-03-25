@@ -18,7 +18,9 @@ public class EditorCeldas extends DefaultCellEditor{
 		// TODO Auto-generated method stub
 		PanelBotones btnPanel = new PanelBotones();
 
+		//manda a llamar a la funcion
 		btnPanel.iniciarEvento(evento, row);
+		
 		btnPanel.setBackground(table.getSelectionBackground());
 		
 		return btnPanel;
