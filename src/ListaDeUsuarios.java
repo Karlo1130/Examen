@@ -2,7 +2,10 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -72,10 +75,11 @@ public class ListaDeUsuarios extends JTable {
 				
 				if(seleccion == 0) {
 					System.out.println("elimina usuario: "+row);
+					
+					eliminarUsuario(row);
 				}
 				
-				
-				}
+			}
 			
 			@Override
 			public void editar(int row, JButton button) {
@@ -118,6 +122,44 @@ public class ListaDeUsuarios extends JTable {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public void eliminarUsuario(int numUsuarioEliminar) {
+		
+		String archivo = "users.txt";
+		
+		int numeroUsuario = 0;
+		
+		try {
+			File archivoTemporal = new File("archivoTemporal");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal));
+			
+			BufferedReader reader = new BufferedReader(new FileReader(archivo));
+			String line = reader.readLine();
+			
+			//copia los datos en un nuevo archivo menos el del usuario especificado
+			while (line != null) {
+				
+				if (numeroUsuario != numUsuarioEliminar) {
+					writer.write(line);
+					writer.newLine();
+				}
+
+				line = reader.readLine();
+				numeroUsuario++;
+			}
+
+			reader.close();
+			writer.close();
+			
+			File borrador = new File(archivo);
+			borrador.delete();
+			
+			archivoTemporal.renameTo(borrador);
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 	}
 

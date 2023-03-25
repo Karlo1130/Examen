@@ -1,9 +1,4 @@
-a, a, a, a, a
-b, b, b, b, b
-c, c, c, c, c
 d, d, d, d, d
-z, z, z, z, z
 q, q, q, q, q
 f, f, f, f, f
-y, y, y, y, y
 h, h, h, h, h

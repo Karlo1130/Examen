@@ -18,6 +18,8 @@ public class ButtonRender extends DefaultTableCellRenderer{
 		//cambia el color de la celda dependiendo de su posicion
 		if (isSelected == false && row%2==0) {
 			btnPanel.setBackground(Color.orange);
+		} else if(isSelected) {
+			btnPanel.setBackground(table.getSelectionBackground());
 		} else {
 			btnPanel.setBackground(Color.white);
 		}
