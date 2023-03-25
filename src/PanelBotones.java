@@ -35,7 +35,7 @@ public class PanelBotones extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				evento.editar(row);
+				evento.editar(row, editar);
 			}
 		});
 		
@@ -45,7 +45,7 @@ public class PanelBotones extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				
-				evento.eliminar(row);
+				evento.eliminar(row, eliminar);
 			}
 		});
 	}

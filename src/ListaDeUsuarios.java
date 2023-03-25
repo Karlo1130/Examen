@@ -63,13 +63,22 @@ public class ListaDeUsuarios extends JTable {
 		TablaEventos eventos = new TablaEventos() {
 			
 			@Override
-			public void eliminar(int row) {
+			public void eliminar(int row, JButton button) {
 				// TODO Auto-generated method stub
 				System.out.println("eliminar"+row);
-			}
+				int seleccion = JOptionPane.showConfirmDialog(button,
+						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				
+				if(seleccion == 0) {
+					System.out.println("elimina usuario: "+row);
+				}
+				
+				
+				}
 			
 			@Override
-			public void editar(int row) {
+			public void editar(int row, JButton button) {
 				// TODO Auto-generated method stub
 				System.out.println("editar"+row);
 			}
