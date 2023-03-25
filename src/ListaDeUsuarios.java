@@ -1,27 +1,31 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class ListaDeUsuarios extends JTable implements MouseListener{
+public class ListaDeUsuarios extends JTable {
 
 	private String[] columns = {"Usuario", "Nombre", "Acciones"};
 	private Object[][] data;
 	private DefaultTableModel table;
-	private JButton button;
 	
 	public ListaDeUsuarios() {
 
-		this.setDefaultRenderer(Object.class, new ButtonRender());
-		this.addMouseListener(this);
+		//cambia el tamaño de las filas
+		this.setRowHeight(40);
+		this.setSelectionBackground(Color.green);
+		
+		//evita que puedas mover las columnas de posicion
+		this.tableHeader.setReorderingAllowed(false);
+		//evita que puedas cambiar el tamaño de las columnas
+		this.tableHeader.setResizingAllowed(false);
+		
+		this.setFocusable(false);
 		
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
@@ -32,15 +36,14 @@ public class ListaDeUsuarios extends JTable implements MouseListener{
 			data = new Object[getNumeroUsuarios()][columns.length];
 
 			int aux = 0;
-
+			
+			//añade los datos de la base de datos a la matriz data
 			while (line != null) {
 				lineArray = line.split(", ");
 
 				for (int i = 0; i < lineArray.length-3; i++) {
 					data[aux][i] = lineArray[i];
 				}
-
-				data[aux][2] = button = new JButton();
 
 				line = reader.readLine();
 				aux++;
@@ -52,35 +55,31 @@ public class ListaDeUsuarios extends JTable implements MouseListener{
 
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} 
+		}
 		
-		this.setModel(table);	
-		System.out.println("si");
-//		button.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// TODO Auto-generated method stub
-//				/*
-//				int column = getColumnModel().getSelectedColumnCount(); 
-//				int row = getRowHeight();
-//
-//				/*if(row < getRowCount() && row >= 0 && column < getColumnCount() && column >= 0) {*/
-//					Object value = getValueAt(row, column);
-//					if(value instanceof JButton) {
-//						((JButton)value).doClick();
-//						JButton boton = (JButton) value;
-//						System.out.println("lol");
-//					}
-//				/*}
-//				*/
-//			}
-//			
-//		});
+		this.setModel(table);
 		
+		//pasa las acciones realizadas por los botones
+		TablaEventos eventos = new TablaEventos() {
 			
+			@Override
+			public void eliminar(int row) {
+				// TODO Auto-generated method stub
+				System.out.println("eliminar"+row);
+			}
+			
+			@Override
+			public void editar(int row) {
+				// TODO Auto-generated method stub
+				System.out.println("editar"+row);
+			}
+		};
+		
+		this.getColumnModel().getColumn(2).setCellRenderer(new ButtonRender());
+		this.getColumnModel().getColumn(2).setCellEditor(new EditorCeldas(eventos));
 	}
 
+	//obtiene el numero de usuarios que contiene la base de datos
 	public int getNumeroUsuarios() {
 
 		int numLines = 0;
@@ -104,49 +103,13 @@ public class ListaDeUsuarios extends JTable implements MouseListener{
 
 	}
 	
+	//hace que las celdas no sean editables y las editables
 	public boolean isCellEditable(int row, int column) {
-		return false;
-	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		int column = getColumnModel().getColumnIndexAtX(e.getX()); 
-		int row = e.getY()/getRowHeight();
-		System.out.println(row);
-		/*
-		if(row < getRowCount() && row >= 0 && column < getColumnCount() && column >= 0) {
-			Object value = getValueAt(row, column);
-			if(value instanceof JButton) {
-				((JButton)value).doClick();
-				JButton boton = (JButton) value;
-				
-			}
-		}*/
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+		if(column == 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }
