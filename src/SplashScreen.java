@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -17,30 +19,57 @@ public class SplashScreen extends JFrame {
     private JPanel panel;
     private JProgressBar progressBar;
     private JLabel label;
+    public int mover=0;
     
-    public SplashScreen() {
-        initComponents();
+    public SplashScreen(ImageIcon img,ImageIcon img2) {
+        initComponents(img,img2);
     }
     
-    public void initComponents() {
+
+    public void initComponents(ImageIcon img,ImageIcon img2) {
+    	
+    		mover =100;
         panel = new JPanel(new BorderLayout());
-        panel.setBackground(Color.WHITE);
+        panel.setLayout(null);
+        panel.setBackground(Color.decode("#007D96"));
         panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         
-        ImageIcon icon = new ImageIcon(getClass().getResource("Tortu.png"));
-        label = new JLabel(icon, SwingConstants.CENTER);
+        
+        label = new JLabel();
         panel.add(label, BorderLayout.CENTER);
         
         progressBar = new JProgressBar();
-        progressBar.setPreferredSize(new Dimension(200, 20));
+        progressBar.setBounds(100,450,500,100);
         progressBar.setStringPainted(true);
-        progressBar.setFont(new Font("Arial", Font.PLAIN, 12));
-        progressBar.setString("Loading...");
-        panel.add(progressBar, BorderLayout.SOUTH);
+        panel.add(progressBar);
+        
+        ImageIcon icon = new ImageIcon();
+        icon = img;
+        JLabel tortuLogin = new JLabel();
+        tortuLogin.setBounds(mover,375,100,100);
+        tortuLogin.setIcon(new ImageIcon(img.getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+        tortuLogin.setBackground(Color.decode("#FFFFFF"));
+        panel.add(tortuLogin);
+        
+        ImageIcon icon2 = new ImageIcon();
+        icon2 = img2;
+        JLabel tortuLogin2 = new JLabel();
+        tortuLogin2.setBounds(250,100,200,200);
+        tortuLogin2.setIcon(new ImageIcon(img2.getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH)));
+        tortuLogin2.setBackground(Color.decode("#FFFFFF"));
+        panel.add(tortuLogin2);
+        
+        JLabel nombres = new JLabel("-Powered by KarloBurrito-",JLabel.CENTER);
+        nombres.setFont(new Font("Times new roman", Font.BOLD,15));
+        nombres.setSize(400, 40);
+        nombres.setLocation(150, 700);
+        nombres.setOpaque(true);
+        nombres.setBackground(Color.decode("#007D96"));
+		panel.add(nombres);
         
         setUndecorated(true);
-        setSize(400, 300);
-        setLocationRelativeTo(null);
+        setSize(700, 800);
+        setLocation(0,0);
         getContentPane().add(panel);
         
         try {

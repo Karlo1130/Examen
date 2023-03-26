@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
 public class Ventana extends JFrame{
 
 	private String anterior = "login";
-	private String actual = "tabla";
+	private String actual = "login";
 	public JPanel panel = null;
 	public JComboBox seleccionUsuario; 
 	public JButton boton;
@@ -73,14 +73,6 @@ public class Ventana extends JFrame{
 			this.revalidate();
 		}
 		
-		if(actual.equals("registro")){
-			panel = registro();
-			
-			this.add(panel);
-			
-			this.repaint();
-			this.revalidate();
-		}
 		if(actual.equals("main")){
 			panel = menuPrincipal();
 			
@@ -105,6 +97,31 @@ public class Ventana extends JFrame{
 			this.repaint();
 			this.revalidate();
 		}
+		if(actual.equals("editarUser")){
+			panel = editarUser();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
+		if(actual.equals("agregar")){
+			panel = agregar();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
+		if(actual.equals("info")){
+			panel = info();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
+		
 	}
 	
 	///////////////////////////////////////// SPLASH  /////////////////////////////////////////////
@@ -305,15 +322,15 @@ public class Ventana extends JFrame{
 		jmb1.add(jm3);
 		jm3.add(jmi5);
 
-		//ACTION LISTENERS JAJAJJAA
-		ActionListener accion1 = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				anterior = actual;
-				actual = "editar";
-
-				limpiarVentana();
-			}
-		};
+				//ACTION LISTENERS JAJAJJAA
+				ActionListener accion1 = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						anterior = actual;
+						actual = "editar";
+		
+						limpiarVentana();
+					}
+				};
 				ActionListener accion2 = new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						anterior = actual;
@@ -323,8 +340,38 @@ public class Ventana extends JFrame{
 						limpiarVentana();
 					}
 				};
+				ActionListener accion3 = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						anterior = actual;
+						actual = "tabla";
+						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
+
+						limpiarVentana();
+					}
+				};
+				ActionListener accion4 = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						anterior = actual;
+						actual = "agregar";
+						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
+
+						limpiarVentana();
+					}
+				};
+				ActionListener accion5 = new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						anterior = actual;
+						actual = "info";
+						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
+
+						limpiarVentana();
+					}
+				};
 				jmi1.addActionListener(accion1);
 				jmi2.addActionListener(accion2);
+				jmi3.addActionListener(accion3);
+				jmi4.addActionListener(accion4);
+				jmi5.addActionListener(accion5);
 
 		return jmb1;
 	}
@@ -412,6 +459,16 @@ public class Ventana extends JFrame{
 				revalidate();
 				
 			}
+		});
+		
+		boton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				anterior = actual;
+				actual = "editarUser";
+				
+				limpiarVentana();
+			}
+			
 		});
 		
 		repaint();
@@ -578,9 +635,8 @@ public class Ventana extends JFrame{
 		});
 		btnAccess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String aux = anterior;
 				anterior = actual;
-				actual = aux;
+				actual = "main";
 
 				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
 
@@ -591,98 +647,529 @@ public class Ventana extends JFrame{
 		return jp1;
 	}
 	
+	////////////////////////////////////////// EDITAR USUARIO //////////////////////////////////////////////
 	
-	//REGISTRO
-	
-	public JPanel registro() {
-		
-		JPanel jp2 = new JPanel();
-		jp2.setSize(500, 700);
-		jp2.setLocation(0, 0);
-		jp2.setLayout(null);
-		jp2.setBackground(Color.decode("#C45EDF"));
-		
-		//titulo
-		JLabel titleR = new JLabel("Registro nuevo usuario",JLabel.CENTER);
-		titleR.setFont(new Font("Comic Sans", Font.BOLD,20));
-		titleR.setSize(280, 40);
-		titleR.setLocation(100, 20);
-		titleR.setOpaque(true);
-		titleR.setBackground(Color.green);
-		jp2.add(titleR);
-		
-		JLabel tag1R = new JLabel("Ingrese el nombre de usuario: ",JLabel.CENTER);
-		tag1R.setSize(250, 20);
-		tag1R.setLocation(120, 80);
-		tag1R.setOpaque(true);
-		tag1R.setBackground(Color.black);
-		tag1R.setForeground(Color.white);
-		jp2.add(tag1R);
-		
-		JTextField usernameR = new JTextField("");
-		usernameR.setSize(250, 40);
-		usernameR.setLocation(120, 100);
-		jp2.add(usernameR);
-		
-		JLabel tag2R = new JLabel("Ingrese el correo electrónico: ",JLabel.CENTER);
-		tag2R.setSize(250, 20);
-		tag2R.setLocation(120, 140);
-		tag2R.setOpaque(true);
-		tag2R.setBackground(Color.black);
-		tag2R.setForeground(Color.white);
-		jp2.add(tag2R);
-		
-		JPasswordField passwordR = new JPasswordField();
-		passwordR.setSize(250, 40);
-		passwordR.setLocation(120, 160);
-		jp2.add(passwordR);
-		
-		JLabel tag3 = new JLabel("Ingrese el nombre: ",JLabel.CENTER);
-		tag3.setSize(250, 20);
-		tag3.setLocation(120, 210);
-		tag3.setOpaque(true);
-		tag3.setBackground(Color.black);
-		tag3.setForeground(Color.white);
-		jp2.add(tag3);
-		
-		JTextField name = new JTextField("");
-		name.setSize(250, 40);
-		name.setLocation(120, 250);
-		jp2.add(name);
-		
-		JLabel tag4 = new JLabel("Ingrese el nombre: ",JLabel.CENTER);
-		tag4.setSize(250, 20);
-		tag4.setLocation(120, 300);
-		tag4.setOpaque(true);
-		tag4.setBackground(Color.black);
-		tag4.setForeground(Color.white);
-		jp2.add(tag4);
-		
-		JTextField lastname = new JTextField("");
-		lastname.setSize(250, 40);
-		lastname.setLocation(120, 340);
-		jp2.add(lastname);
-		
-		JButton btnAdd = new JButton("R E G I S T R O");
-		btnAdd.setSize(250,40);
-		btnAdd.setLocation(120, 390);
-		jp2.add(btnAdd);
-		
-		btnAdd.addActionListener(new ActionListener() {
+	public JPanel editarUser() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-				anterior = actual;
-				actual = "login";
-				
-				limpiarVentana();
-				
+		JPanel jp1 = new JPanel();
+		jp1.setSize(500, 700);
+		jp1.setLocation(0, 0);
+		jp1.setLayout(null);
+		jp1.setBackground(Color.decode("#7AE9FF"));
+
+		JLabel title = new JLabel("Editar usuario",JLabel.CENTER);
+		title.setBounds(0, 30, 700, 50);
+		title.setFont(new Font("Open sans", Font.BOLD,40));
+		title.setOpaque(true);
+		title.setBackground(Color.decode("#7AE9FF"));
+		title.setForeground(Color.white);
+		jp1.add(title);
+
+		ImageIcon imagen = new ImageIcon("Editar.png");
+		JLabel tortu = new JLabel();
+		tortu.setBounds(250, 80, 150, 150);
+		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH)));
+		tortu.setBackground(Color.decode("#FFFFFF"));
+		jp1.add(tortu);
+
+		JLabel nombre = new JLabel("Nombre: ",JLabel.LEFT);
+		nombre.setFont(new Font("Open sans", Font.BOLD,20));
+		nombre.setBounds(80,250,100,20);
+		jp1.add(nombre);
+
+		JTextField nombreText = new JTextField("Nombre");
+		nombreText.setBounds(80, 270, 520, 30);
+		jp1.add(nombreText);
+
+		JLabel apellidos = new JLabel("Apellidos: ",JLabel.LEFT);
+		apellidos.setFont(new Font("Open sans", Font.BOLD,20));
+		apellidos.setBounds(80,310,100,20);
+		jp1.add(apellidos);
+
+		JTextField apellidosText = new JTextField("Apellidos");
+		apellidosText.setBounds(80, 330, 520, 30);
+		jp1.add(apellidosText);
+		
+		JLabel usuario = new JLabel("Apellidos: ",JLabel.LEFT);
+		usuario.setFont(new Font("Open sans", Font.BOLD,20));
+		usuario.setBounds(80,370,100,20);
+		jp1.add(usuario);
+
+		JTextField usuarioText = new JTextField("Apellidos");
+		usuarioText.setBounds(80, 390, 520, 30);
+		jp1.add(usuarioText);
+
+		JLabel email = new JLabel("Email: ",JLabel.LEFT);
+		email.setFont(new Font("Open sans", Font.BOLD,20));
+		email.setBounds(80,430,100,20);
+		jp1.add(email);
+
+		JTextField emailText = new JTextField("Email");
+		emailText.setBounds(80, 450, 520, 30);
+		jp1.add(emailText);
+
+		JLabel contraseña = new JLabel("Contraseña: ",JLabel.LEFT);
+		contraseña.setFont(new Font("Open sans", Font.BOLD,20));
+		contraseña.setBounds(80,490,140,20);
+		jp1.add(contraseña);
+
+		JPasswordField contraseñaText = new JPasswordField("Contraseña");
+		contraseñaText.setBounds(80, 510, 520, 30);
+		jp1.add(contraseñaText);
+		
+		JLabel contraseña2 = new JLabel("Confirmar contraseña: ",JLabel.LEFT);
+		contraseña2.setFont(new Font("Open sans", Font.BOLD,20));
+		contraseña2.setBounds(80,550,220,20);
+		jp1.add(contraseña2);
+
+		JPasswordField contraseñaText2 = new JPasswordField("Contraseña");
+		contraseñaText2.setBounds(80, 570, 520, 30);
+		jp1.add(contraseñaText2);
+
+		ImageIcon logImagen = new ImageIcon("LogIn.png");
+		JButton btnAccess = new JButton();
+		btnAccess.setBackground(Color.decode("#00D5FF"));
+		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
+		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnAccess.setSize(60,60);
+		btnAccess.setLocation(540,640);
+		jp1.add(btnAccess);
+
+		JLabel login = new JLabel("Adelante");
+		login.setFont(new Font("Open sans", Font.BOLD,20));
+		login.setBounds(540,580,100,100);
+		login.setForeground(Color.white);
+		jp1.add(login);
+
+		ImageIcon returnImagen = new ImageIcon("Return.png");
+		JButton btnReturn = new JButton();
+		btnReturn.setBackground(Color.decode("#00D5FF"));
+		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnReturn.setSize(60,60);
+		btnReturn.setLocation(80,640);
+		jp1.add(btnReturn);
+
+		JLabel returnn = new JLabel("Regresar");
+		returnn.setFont(new Font("Open sans", Font.BOLD,20));
+		returnn.setBounds(80,580,100,100);
+		//returnn.setBackground(Color.decode("#5ED6DF"));
+		returnn.setForeground(Color.white);
+		jp1.add(returnn);
+		
+		btnReturn.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#02B6DA"));
 			}
-			
+			public void mouseExited(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		btnAccess.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		JPanel jp2 = new JPanel();
+		jp2.setBounds(40, 240, 600, 380);
+		jp2.setBackground(Color.decode("#00D5FF"));
+		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
+		jp1.add(jp2);
+
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String aux = anterior;
+				anterior = actual;
+				actual = aux;
+				limpiarVentana();
+			}
+		});
+		btnAccess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String aux = anterior;
+				anterior = actual;
+				actual = aux;
+
+				JOptionPane.showMessageDialog(null,"Usuario ingresado con exito.");
+
+				limpiarVentana();
+			}
+		});
+
+		return jp1;
+	}
+	
+	////////////////////////////////////////// AGREGAR USUARIO /////////////////////////////////////////////
+	
+	public JPanel agregar() {
+
+		JPanel jp1 = new JPanel();
+		jp1.setSize(500, 700);
+		jp1.setLocation(0, 0);
+		jp1.setLayout(null);
+		jp1.setBackground(Color.decode("#7AE9FF"));
+
+		JLabel title = new JLabel("Agregar usuario",JLabel.CENTER);
+		title.setBounds(0, 30, 700, 50);
+		title.setFont(new Font("Open sans", Font.BOLD,40));
+		title.setOpaque(true);
+		title.setBackground(Color.decode("#7AE9FF"));
+		title.setForeground(Color.white);
+		jp1.add(title);
+
+		ImageIcon imagen = new ImageIcon("TortuCrea.png");
+		JLabel tortu = new JLabel();
+		tortu.setBounds(250, 80, 150, 150);
+		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH)));
+		tortu.setBackground(Color.decode("#FFFFFF"));
+		jp1.add(tortu);
+
+		JLabel nombre = new JLabel("Nombre: ",JLabel.LEFT);
+		nombre.setFont(new Font("Open sans", Font.BOLD,20));
+		nombre.setBounds(80,250,100,20);
+		jp1.add(nombre);
+
+		JTextField nombreText = new JTextField("Nombre");
+		nombreText.setBounds(80, 270, 520, 30);
+		jp1.add(nombreText);
+
+		JLabel apellidos = new JLabel("Apellidos: ",JLabel.LEFT);
+		apellidos.setFont(new Font("Open sans", Font.BOLD,20));
+		apellidos.setBounds(80,310,100,20);
+		jp1.add(apellidos);
+
+		JTextField apellidosText = new JTextField("Apellidos");
+		apellidosText.setBounds(80, 330, 520, 30);
+		jp1.add(apellidosText);
+		
+		JLabel usuario = new JLabel("Apellidos: ",JLabel.LEFT);
+		usuario.setFont(new Font("Open sans", Font.BOLD,20));
+		usuario.setBounds(80,370,100,20);
+		jp1.add(usuario);
+
+		JTextField usuarioText = new JTextField("Apellidos");
+		usuarioText.setBounds(80, 390, 520, 30);
+		jp1.add(usuarioText);
+
+		JLabel email = new JLabel("Email: ",JLabel.LEFT);
+		email.setFont(new Font("Open sans", Font.BOLD,20));
+		email.setBounds(80,430,100,20);
+		jp1.add(email);
+
+		JTextField emailText = new JTextField("Email");
+		emailText.setBounds(80, 450, 520, 30);
+		jp1.add(emailText);
+
+		JLabel contraseña = new JLabel("Contraseña: ",JLabel.LEFT);
+		contraseña.setFont(new Font("Open sans", Font.BOLD,20));
+		contraseña.setBounds(80,490,140,20);
+		jp1.add(contraseña);
+
+		JPasswordField contraseñaText = new JPasswordField("Contraseña");
+		contraseñaText.setBounds(80, 510, 520, 30);
+		jp1.add(contraseñaText);
+		
+		JLabel contraseña2 = new JLabel("Confirmar contraseña: ",JLabel.LEFT);
+		contraseña2.setFont(new Font("Open sans", Font.BOLD,20));
+		contraseña2.setBounds(80,550,220,20);
+		jp1.add(contraseña2);
+
+		JPasswordField contraseñaText2 = new JPasswordField("Contraseña");
+		contraseñaText2.setBounds(80, 570, 520, 30);
+		jp1.add(contraseñaText2);
+
+		ImageIcon logImagen = new ImageIcon("LogIn.png");
+		JButton btnAccess = new JButton();
+		btnAccess.setBackground(Color.decode("#00D5FF"));
+		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
+		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnAccess.setSize(60,60);
+		btnAccess.setLocation(540,640);
+		jp1.add(btnAccess);
+
+		JLabel login = new JLabel("Adelante");
+		login.setFont(new Font("Open sans", Font.BOLD,20));
+		login.setBounds(540,580,100,100);
+		login.setForeground(Color.white);
+		jp1.add(login);
+
+		ImageIcon returnImagen = new ImageIcon("Return.png");
+		JButton btnReturn = new JButton();
+		btnReturn.setBackground(Color.decode("#00D5FF"));
+		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnReturn.setSize(60,60);
+		btnReturn.setLocation(80,640);
+		jp1.add(btnReturn);
+
+		JLabel returnn = new JLabel("Regresar");
+		returnn.setFont(new Font("Open sans", Font.BOLD,20));
+		returnn.setBounds(80,580,100,100);
+		//returnn.setBackground(Color.decode("#5ED6DF"));
+		returnn.setForeground(Color.white);
+		jp1.add(returnn);
+		
+		btnReturn.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		btnAccess.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		JPanel jp2 = new JPanel();
+		jp2.setBounds(40, 240, 600, 380);
+		jp2.setBackground(Color.decode("#00D5FF"));
+		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
+		jp1.add(jp2);
+
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String aux = anterior;
+				anterior = actual;
+				actual = aux;
+				limpiarVentana();
+			}
+		});
+		btnAccess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				anterior = actual;
+				actual = "main";
+
+				JOptionPane.showMessageDialog(null,"Usuario creado con exito.");
+
+				limpiarVentana();
+			}
+		});
+
+		return jp1;
+	}
+	////////////////////////////////////////////// INFO ///////////////////////////////////////////////////
+	public JPanel info() {
+
+		JPanel jp1 = new JPanel();
+		jp1.setSize(500, 700);
+		jp1.setLocation(0, 0);
+		jp1.setLayout(null);
+		jp1.setBackground(Color.decode("#7AE9FF"));
+		
+		ImageIcon imagen = new ImageIcon("Info.png");
+		JLabel tortu = new JLabel();
+		tortu.setBounds(250, 80, 150, 150);
+		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH)));
+		tortu.setBackground(Color.decode("#FFFFFF"));
+		jp1.add(tortu);
+
+		JLabel title = new JLabel("¿Cómo crear un usuario?",JLabel.CENTER);
+		title.setBounds(0, 30, 700, 50);
+		title.setFont(new Font("Open sans", Font.BOLD,40));
+		title.setOpaque(true);
+		title.setBackground(Color.decode("#7AE9FF"));
+		title.setForeground(Color.white);
+		jp1.add(title);
+		
+		JTextArea infoText = new JTextArea("1.- Hacer click en la opción -Usuarios- en"+"\n"
+										 + "el menú superior"+"\n"
+										 + "2.-Hacer click en la opción -Crear"+"\n"
+										 + "Usuario- en el menú desplegado"+"\n"
+										 + "3.- Llenar los campos solicitados"+"\n"
+										 + "4.- Hacer click en el borón -Crear"+"\n"
+										 + "Usuario"+"\n"
+										 + "5.- Listo, el usuario se ha creado");
+		infoText.setFont(new Font("Open sans", Font.BOLD,22));
+		infoText.setForeground(Color.white);
+		infoText.setBackground(Color.decode("#00D5FF"));
+		infoText.setBounds(140, 300, 460, 300);
+		infoText.setVisible(true);
+		jp1.add(infoText);
+		
+		
+		
+		ImageIcon logImagen = new ImageIcon("LogIn.png");
+		JButton btnAccess = new JButton();
+		btnAccess.setBackground(Color.decode("#00D5FF"));
+		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
+		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnAccess.setSize(60,60);
+		btnAccess.setLocation(540,640);
+		jp1.add(btnAccess);
+
+		JLabel login = new JLabel("Adelante");
+		login.setFont(new Font("Open sans", Font.BOLD,20));
+		login.setBounds(540,580,100,100);
+		login.setForeground(Color.white);
+		jp1.add(login);
+		
+		ImageIcon returnImagen = new ImageIcon("Return.png");
+		JButton btnReturn = new JButton();
+		btnReturn.setBackground(Color.decode("#00D5FF"));
+		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+		btnReturn.setSize(60,60);
+		btnReturn.setLocation(80,640);
+		jp1.add(btnReturn);
+
+		JLabel returnn = new JLabel("Regresar");
+		returnn.setFont(new Font("Open sans", Font.BOLD,20));
+		returnn.setBounds(80,580,100,100);
+		//returnn.setBackground(Color.decode("#5ED6DF"));
+		returnn.setForeground(Color.white);
+		jp1.add(returnn);
+		
+		btnReturn.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		btnAccess.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#00D5FF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		JPanel jp2 = new JPanel();
+		jp2.setBounds(100, 240, 500, 380);
+		jp2.setBackground(Color.decode("#00D5FF"));
+		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
+		jp1.add(jp2);
+
+		btnReturn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String aux = anterior;
+				anterior = actual;
+				actual = aux;
+				limpiarVentana();
+			}
+		});
+		btnAccess.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				anterior = actual;
+				actual = "agregar";
+
+				limpiarVentana();
+			}
 		});
 		
-		return jp2;
+		
+		return jp1;
 	}
+	
 }
