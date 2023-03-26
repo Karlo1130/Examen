@@ -1,3 +1,8 @@
+b, Nombre, Apellidos, Email, Contraseña
+c, Nombre, Apellidos, Email, Contraseña
+d, Nombre, Apellidos, Email, Contraseña
+e, Nombre, Apellidos, Email, Contraseña
+f, s, s, s, f
 KTAL, z, z, z, c
 KARLOBURRITO, z, z, z, c
 ZUMAYAGAY, z, z, z, c
