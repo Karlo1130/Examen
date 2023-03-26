@@ -1,7 +1,5 @@
-z, z, z, z, c
-z, z, z, z, c
-z, z, z, z, c
-z, z, z, z, c
-z, z, z, z, c
-z, z, z, z, c
-z, z, z, z, c
+z, z, z, z
+z, z, z, z
+z, z, z, z
+z, z, z, z
+z, z, z, z
