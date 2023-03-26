@@ -122,7 +122,7 @@ public class ListaDeUsuarios extends JTable {
 			while (line != null) {
 				lineArray = line.split(", ");
 
-				for (int i = 0; i < lineArray.length-3; i++) {
+				for (int i = 0; i < lineArray.length-2; i++) {
 					data[aux][i] = lineArray[i];
 				}
 
