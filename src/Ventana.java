@@ -301,10 +301,8 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#C45EDF"));
-												/////////////////////////////////////////////
-												//CUANDO SE PUEDA COLOCAR NOMBRE LO PONEMOS//
-												/////////////////////////////////////////////
-		JLabel contraseña = new JLabel("BIENVENIDO"+"\n"+"@Nombre",JLabel.CENTER);
+
+		JLabel contraseña = new JLabel("BIENVENIDO "+" "+usuario,JLabel.CENTER);
 		contraseña.setFont(new Font("Open sans", Font.BOLD,40));
 		contraseña.setSize(700, 60);
 		contraseña.setLocation(0, 150);
