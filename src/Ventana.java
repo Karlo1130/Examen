@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class Ventana extends JFrame{
 
 	private String anterior = "login";
 	private String actual = "login";
+	private String usuario;
 	public JPanel panel = null;
 	
 	public Ventana() {
@@ -241,14 +243,14 @@ public class Ventana extends JFrame{
 					String[] lineArray = null;
 					
 					String tempPassword = new String(password.getPassword());
-					String userName = username.getText();
+					usuario = username.getText();
 					
 					boolean match = false;
 					
 					while (line != null && match == false) {
 						lineArray = line.split(", ");
 
-						if(userName.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
+						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
 							match = true;
 							
 						}
@@ -275,6 +277,15 @@ public class Ventana extends JFrame{
 
 			}
 
+		});
+		
+		btnReturn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				cerrarVentana();
+			}
 		});
 
 		//this.add(jp1);
@@ -524,14 +535,16 @@ public class Ventana extends JFrame{
 		});
 		btnAccess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+				actualizarUsuario(nombreText, apellidosText, emailText, contraseñaText);
+				
+				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
 				String aux = anterior;
 				anterior = actual;
 				actual = aux;
-			
 				
-				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
-
 				limpiarVentana();
+
 			}
 		});
 
@@ -631,5 +644,62 @@ public class Ventana extends JFrame{
 		});
 		
 		return jp2;
+	}
+	
+	public void actualizarUsuario(JTextField nombreText, JTextField apellidosText, 
+			JTextField emailText, JPasswordField contraseñaText) {
+		String archivo = "users.txt";
+		
+		try {
+			File archivoTemporal = new File("archivoTemporal");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal));
+			
+			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+			String line = reader.readLine();
+			
+			String[] lineArray = null;
+			
+			boolean match = false;
+
+			String contraseña = new String(contraseñaText.getPassword());
+			
+			String nuevosDatos = usuario+", "+
+					nombreText.getText()+", "+
+					apellidosText.getText()+", "+
+					emailText.getText()+", "+
+					contraseña;
+			
+			while (line != null) {
+				lineArray = line.split(", ");
+
+				if(!usuario.equals(lineArray[0])) {
+					writer.write(line);
+					writer.newLine();
+					
+				} else {
+					writer.write(nuevosDatos);
+					writer.newLine();
+				}
+			
+				line = reader.readLine();
+			}
+			
+			reader.close();
+			writer.close();
+			
+			File borrador = new File(archivo);
+			borrador.delete();
+			
+			archivoTemporal.renameTo(borrador);
+			
+			
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void cerrarVentana() {
+		this.dispose();
 	}
 }
