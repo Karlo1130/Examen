@@ -20,7 +20,7 @@ public class SplashScreen extends JFrame {
     private JProgressBar progressBar;
     private JLabel label;
     public int mover=0;
-    
+    public JLabel tortuLogin;
     public SplashScreen(ImageIcon img,ImageIcon img2) {
         initComponents(img,img2);
     }
@@ -45,7 +45,7 @@ public class SplashScreen extends JFrame {
         
         ImageIcon icon = new ImageIcon();
         icon = img;
-        JLabel tortuLogin = new JLabel();
+        tortuLogin = new JLabel();
         tortuLogin.setBounds(mover,375,100,100);
         tortuLogin.setIcon(new ImageIcon(img.getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         tortuLogin.setBackground(Color.decode("#FFFFFF"));
@@ -83,6 +83,8 @@ public class SplashScreen extends JFrame {
     
     public void setProgress(int value) {
         progressBar.setValue(value);
+        mover = value;
+        tortuLogin.setLocation((value+10)* 5,375);
     }
     
     public void setMessage(String message) {
