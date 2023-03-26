@@ -4,17 +4,23 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 public class Ventana extends JFrame{
 
 	private String anterior = "login";
-	private String actual = "login";
+	private String actual = "tabla";
 	public JPanel panel = null;
+	public JComboBox seleccionUsuario; 
+	public JButton boton;
 	
 	public Ventana() {
 		
@@ -24,10 +30,8 @@ public class Ventana extends JFrame{
 
 		this.setTitle("Hola zumaya :D");
 		this.setSize(700, 800);
-
-		panel = editar();
 		
-		this.add(panel);
+		
 		/*repaint();
 		revalidate();
 		int cont = 5000;
@@ -85,6 +89,14 @@ public class Ventana extends JFrame{
 			this.repaint();
 			this.revalidate();
 		}
+		if(actual.equals("tabla")){
+			panel = pantallaTabla();
+			
+			this.add(panel);
+			
+			this.repaint();
+			this.revalidate();
+		}
 		if(actual.equals("editar")){
 			panel = editar();
 			
@@ -95,11 +107,9 @@ public class Ventana extends JFrame{
 		}
 	}
 	
-	///////////////////////////////////////// LOG IN JAJAJA /////////////////////////////////////////////
+	///////////////////////////////////////// SPLASH  /////////////////////////////////////////////
 	
 	public JPanel splash() {
-		anterior = actual;
-		actual = "splash";
 
 		JPanel jp1 = new JPanel();
 		jp1.setSize(700, 800);
@@ -114,19 +124,12 @@ public class Ventana extends JFrame{
 		tortu.setBackground(Color.decode("#FFFFFF"));
 		jp1.add(tortu);
 
-		JProgressBar bar = new JProgressBar(0,100);
-		bar.setBounds(150,400,400,80);
+		JProgressBar bar = new JProgressBar(0,10);
+		bar.setBounds(100,400,400,100);
 		jp1.add(bar);
-
-		try {
-			for(int i=0; i<=100;i++) {
-				Thread.sleep(10);
-				bar.setValue(i);
-			}
-		}catch(Exception e) {
-
-		}
-		if(bar.getValue() == 100) {
+		
+		
+		if(bar.getValue() == 10) {
 			anterior = actual;
 			actual = "login";
 			limpiarVentana();
@@ -324,6 +327,96 @@ public class Ventana extends JFrame{
 				jmi2.addActionListener(accion2);
 
 		return jmb1;
+	}
+	//////////////////////////////////////// ALGO EXTRA /////////////////////////////////////////////////
+	public int getNumeroUsuarios() {
+
+		int numLines = 0;
+
+		try {
+			BufferedReader readerCounter = new BufferedReader(new FileReader("users.txt"));
+			String lineCounter = readerCounter.readLine();
+
+			while(lineCounter!=null) {
+				numLines++;
+				lineCounter = readerCounter.readLine();
+			}
+
+			readerCounter.close();
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} 
+
+		return numLines;
+
+	}
+	/////////////////////////////////// TABLAAAAAAAAAAAAAA /////////////////////////////////////////////
+	
+	public JPanel pantallaTabla() {
+		
+		JPanel jp1 = new JPanel();
+		jp1.setSize(500, 700);
+		jp1.setLocation(0, 0);
+		jp1.setLayout(null);
+		jp1.setBackground(Color.decode("#7AE9FF"));
+		JScrollPane test = new JScrollPane(new ListaDeUsuarios());
+		test.setVisible(true);
+		test.setBounds(50,300,600,400);
+		jp1.add(test);
+		
+		String[] usuarios = new String[getNumeroUsuarios()];
+
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+			String line = reader.readLine();
+			
+			String[] lineArray = null;
+			int aux = 0;
+			
+			while (line != null) {
+				lineArray = line.split(", ");
+				
+				usuarios[aux]= lineArray[0];
+
+				aux++;
+				line = reader.readLine();
+			}
+			reader.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		seleccionUsuario = new JComboBox(usuarios);
+		seleccionUsuario.setBounds(75, 200, 550, 40);
+		seleccionUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
+		seleccionUsuario.setMaximumRowCount(6);
+		seleccionUsuario.setVisible(true);
+		//seleccionUsuario.addActionListener(this);
+		jp1.add(seleccionUsuario);
+		
+		boton = new JButton();
+		boton = new JButton((String)seleccionUsuario.getSelectedItem());
+		boton.setBounds(75, 250, 550, 40);
+		boton.setVisible(true);
+		boton.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
+		//boton.addActionListener(this);
+		jp1.add(boton);
+
+		seleccionUsuario.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				seleccionUsuario.repaint();
+				seleccionUsuario.revalidate();
+				boton.setText((String)seleccionUsuario.getSelectedItem());
+				repaint();
+				revalidate();
+				
+			}
+		});
+		
+		repaint();
+		revalidate();
+		return jp1;
 	}
 	
 	//////////////////////////////////////////EDITAR //////////////////////////////////////////////////
