@@ -464,7 +464,7 @@ public class Ventana extends JFrame{
 		boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				anterior = actual;
-				actual = "ediarUser";
+				actual = "editarUser";
 				
 				limpiarVentana();
 			}
