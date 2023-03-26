@@ -4,6 +4,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -175,7 +180,7 @@ public class Ventana extends JFrame{
 		nombre.setForeground(Color.white);
 		jp1.add(nombre);
 
-		JTextField username = new JTextField("Usuario");
+		JTextField username = new JTextField();
 		username.setSize(300,30);
 		username.setLocation(200, 370);
 		jp1.add(username);
@@ -189,7 +194,7 @@ public class Ventana extends JFrame{
 		contraseña.setForeground(Color.white);
 		jp1.add(contraseña);
 
-		JPasswordField password = new JPasswordField("Contraseña");
+		JPasswordField password = new JPasswordField();
 		password.setSize(300, 30);
 		password.setLocation(200, 460);
 		jp1.add(password);
@@ -228,11 +233,45 @@ public class Ventana extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
+				try {
+					BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+					String line = reader.readLine();
+					
+					String[] lineArray = null;
+					
+					String tempPassword = new String(password.getPassword());
+					String userName = username.getText();
+					
+					boolean match = false;
+					
+					while (line != null && match == false) {
+						lineArray = line.split(", ");
 
-				anterior = actual;
-				actual = "main";
+						if(userName.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
+							match = true;
+							
+						}
+					
+						line = reader.readLine();
+					}
+					
+					reader.close();
+					
+					if(!match)
+						JOptionPane.showMessageDialog(jp1, "Error al iniciar sesion", "ERROR", JOptionPane.ERROR_MESSAGE);
+					else
+					{
+						anterior = actual;
+						actual = "main";
+						limpiarVentana();
+					}
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 
-				limpiarVentana();
+				
 
 			}
 
@@ -383,7 +422,7 @@ public class Ventana extends JFrame{
 		contraseña.setBounds(80,540,140,20);
 		jp1.add(contraseña);
 
-		JTextField contraseñaText = new JTextField("Contraseña");
+		JPasswordField contraseñaText = new JPasswordField("Contraseña");
 		contraseñaText.setBounds(80, 560, 520, 30);
 		jp1.add(contraseñaText);
 
@@ -488,7 +527,8 @@ public class Ventana extends JFrame{
 				String aux = anterior;
 				anterior = actual;
 				actual = aux;
-
+			
+				
 				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
 
 				limpiarVentana();
