@@ -1004,9 +1004,6 @@ public class Ventana extends JFrame{
 
 		btnReturn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				////////////////////////////////////////
-				////// DA ERROR AL REGRESAR ///////////
-				//////////////////////////////////////
 				String aux = anterior;
 				anterior = actual;
 				actual = aux;
