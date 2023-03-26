@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-Z, z, z, z, c
-=======
 a, Nombre, Apellidos, Email, Contraseña
 b, Nombre, Apellidos, Email, Contraseña
 c, Nombre, Apellidos, Email, Contraseña
 d, Nombre, Apellidos, Email, Contraseña
 e, Nombre, Apellidos, Email, Contraseña
 f, pornito, kaka, listo, f
-t, Nombre, Apellidos, Email, Contraseña
->>>>>>> 8c9aefb30d63b66855e2696787ea95708eb2a8ff
