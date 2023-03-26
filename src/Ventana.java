@@ -23,6 +23,7 @@ public class Ventana extends JFrame{
 	private String actual = "login";
 	public JPanel panel = null;
 	private String usuario;
+	private String email;
 	public JComboBox seleccionUsuario; 
 	public JButton boton;
 	
@@ -268,6 +269,8 @@ public class Ventana extends JFrame{
 						lineArray = line.split(", ");
 
 						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
+							email = lineArray[3];
+							System.out.print(email);
 							match = true;
 							
 						}
@@ -452,12 +455,12 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#7AE9FF"));
-		JScrollPane test = new JScrollPane(new ListaDeUsuarios());
+		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email));
 		test.setVisible(true);
 		test.setBounds(50,300,600,400);
 		jp1.add(test);
 		
-		String[] usuarios = new String[getNumeroUsuarios()];
+		String[] usuarios = new String[getNumeroUsuarios()-1];
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
@@ -469,9 +472,14 @@ public class Ventana extends JFrame{
 			while (line != null) {
 				lineArray = line.split(", ");
 				
-				usuarios[aux]= lineArray[0];
+				if (!lineArray[3].equals(email)) {
+					usuarios[aux]= lineArray[0];
+				}
 
-				aux++;
+				if (!lineArray[3].equals(email)) {
+					aux++;
+					}
+				
 				line = reader.readLine();
 			}
 			reader.close();
@@ -1108,6 +1116,7 @@ public class Ventana extends JFrame{
 		infoText.setForeground(Color.white);
 		infoText.setBackground(Color.decode("#00D5FF"));
 		infoText.setBounds(140, 300, 460, 300);
+		infoText.setEditable(false);
 		infoText.setVisible(true);
 		jp1.add(infoText);
 		

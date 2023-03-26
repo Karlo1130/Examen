@@ -1,13 +1,7 @@
-b, Nombre, Apellidos, Email, Contraseña
-c, Nombre, Apellidos, Email, Contraseña
-d, Nombre, Apellidos, Email, Contraseña
-e, Nombre, Apellidos, Email, Contraseña
-f, Pedro, Vargas, peva_21@alu.uabcs.mx, HolakarloQueAndasMIrandoMIContraseña
-KTAL, z, z, z, c
-KARLOBURRITO, z, z, z, c
-ZUMAYAGAY, z, z, z, c
-z, z, z, z
-z, z, z, z
-z, z, z, z
-z, z, z, z
-z, z, z, z
+a, a, a, ab, a
+b, b, b, bb, b
+c, c, c, cb, c
+d, d, d, db, d
+e, e, e, eb, e
+f, f, f, fb, f
+g, g, g, gb, g
