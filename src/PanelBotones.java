@@ -8,17 +8,11 @@ import javax.swing.border.EmptyBorder;
 
 public class PanelBotones extends JPanel{
 
-	private JButton editar;
 	private JButton eliminar;
 	
 	public PanelBotones(){
 		
 		this.setBackground(Color.red);
-		
-		//crea el boton editar
-		editar = new JButton("Editar");
-		editar.setBackground(Color.blue);
-		this.add(editar);
 
 		//crea el boton eliminar
 		eliminar = new JButton("Eliminar");
@@ -27,17 +21,8 @@ public class PanelBotones extends JPanel{
 
 	}
 	
-	//agrega actionListeners a los botones
+	//agrega actionListeners a el boton
 	public void iniciarEvento(TablaEventos evento, int row) {
-		editar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
-				evento.editar(row, editar);
-			}
-		});
 		
 		eliminar.addActionListener(new ActionListener() {
 
