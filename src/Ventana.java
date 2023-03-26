@@ -13,7 +13,7 @@ import javax.swing.border.TitledBorder;
 public class Ventana extends JFrame{
 
 	private String anterior = "login";
-	private String actual = "splash";
+	private String actual = "login";
 	public JPanel panel = null;
 	
 	public Ventana() {
@@ -24,12 +24,20 @@ public class Ventana extends JFrame{
 
 		this.setTitle("Hola zumaya :D");
 		this.setSize(700, 800);
-		
-		JMenuBar menuPrincipal = Menu();
 
 		panel = editar();
 		
 		this.add(panel);
+		/*repaint();
+		revalidate();
+		int cont = 5000;
+		for (int i=0; i<cont+1;i++) {
+			if (i >= cont) {
+				actual = "login";
+				cont = -1;
+			}
+		}*/
+		
 		limpiarVentana();
 		/*JScrollPane test = new JScrollPane(new ListaDeUsuarios());
 		this.add(test);
@@ -38,17 +46,16 @@ public class Ventana extends JFrame{
 		this.revalidate();
 	}
 	
-	/////////////////////////////////////// LIMPIAR VENTANA /////////////////////////////////////////////
 	public void limpiarVentana() {
 		if(panel!= null) {
 			this.remove(panel);
 		}
-
+		
 		if(actual.equals("splash")){
 			panel = splash(); 
-			
+
 			this.add(panel);
-			
+
 			this.repaint();
 			this.revalidate();
 		}
@@ -88,61 +95,61 @@ public class Ventana extends JFrame{
 		}
 	}
 	
-	//////////////////////////////////////////// SLASH //////////////////////////////////////////////////
+	///////////////////////////////////////// LOG IN JAJAJA /////////////////////////////////////////////
 	
 	public JPanel splash() {
 		anterior = actual;
 		actual = "splash";
-		
+
 		JPanel jp1 = new JPanel();
 		jp1.setSize(700, 800);
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#5ED6DF"));
-		
+
 		ImageIcon imagen = new ImageIcon("Tortu.png");
 		JLabel tortu = new JLabel();
 		tortu.setBounds(250, 100, 200, 200);
 		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH)));
 		tortu.setBackground(Color.decode("#FFFFFF"));
 		jp1.add(tortu);
-		
+
 		JProgressBar bar = new JProgressBar(0,100);
 		bar.setBounds(150,400,400,80);
 		jp1.add(bar);
-		
+
 		try {
 			for(int i=0; i<=100;i++) {
 				Thread.sleep(10);
 				bar.setValue(i);
 			}
 		}catch(Exception e) {
-			
+
 		}
 		if(bar.getValue() == 100) {
 			anterior = actual;
 			actual = "login";
 			limpiarVentana();
-			
+
 			repaint();
 			revalidate();
 		}
-		
+
 		return jp1;
 	}
 	
 	///////////////////////////////////////// LOG IN JAJAJA /////////////////////////////////////////////
 	
 	public JPanel login() {
-		
+
 		this.setJMenuBar(null);
-		
+
 		JPanel jp1 = new JPanel();
 		jp1.setSize(700,800);
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#5ED6DF"));
-		
+
 		//titulo
 		JLabel title = new JLabel("Accede a tu cuenta",JLabel.CENTER);
 		title.setFont(new Font("Times new roman", Font.BOLD,40));
@@ -151,14 +158,14 @@ public class Ventana extends JFrame{
 		title.setOpaque(true);
 		title.setBackground(Color.decode("#5ED6DF"));
 		jp1.add(title);
-		
+
 		ImageIcon imagen = new ImageIcon("TortuLogin.png");
 		JLabel tortuLogin = new JLabel();
 		tortuLogin.setBounds(275, 140, 150, 150);
 		tortuLogin.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(150,150,Image.SCALE_SMOOTH)));
 		tortuLogin.setBackground(Color.decode("#FFFFFF"));
 		jp1.add(tortuLogin);
-		
+
 		JLabel nombre = new JLabel("Ingrese usuario: ",JLabel.LEFT);
 		nombre.setFont(new Font("Open sans", Font.BOLD,20));
 		nombre.setSize(300, 20);
@@ -167,12 +174,12 @@ public class Ventana extends JFrame{
 		nombre.setBackground(Color.decode("#5ED6DF"));
 		nombre.setForeground(Color.white);
 		jp1.add(nombre);
-		
+
 		JTextField username = new JTextField("Usuario");
 		username.setSize(300,30);
 		username.setLocation(200, 370);
 		jp1.add(username);
-		
+
 		JLabel contraseña = new JLabel("Ingrese Contraseña: ",JLabel.LEFT);
 		contraseña.setFont(new Font("Open sans", Font.BOLD,20));
 		contraseña.setSize(300, 20);
@@ -181,56 +188,56 @@ public class Ventana extends JFrame{
 		contraseña.setBackground(Color.decode("#5ED6DF"));
 		contraseña.setForeground(Color.white);
 		jp1.add(contraseña);
-		
+
 		JPasswordField password = new JPasswordField("Contraseña");
 		password.setSize(300, 30);
 		password.setLocation(200, 460);
 		jp1.add(password);
-		
-		
+
+
 		ImageIcon logImagen = new ImageIcon("LogIn.png");
 		JButton btnAccess = new JButton();
 		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnAccess.setSize(60,60);
 		btnAccess.setLocation(400,560);
 		jp1.add(btnAccess);
-		
+
 		JLabel login = new JLabel("Ingresar");
 		login.setFont(new Font("Open sans", Font.BOLD,20));
 		login.setBounds(400,500,100,100);
 		login.setBackground(Color.decode("#5ED6DF"));
 		login.setForeground(Color.white);
 		jp1.add(login);
-		
+
 		ImageIcon returnImagen = new ImageIcon("Return.png");
 		JButton btnReturn = new JButton();
 		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnReturn.setSize(60,60);
 		btnReturn.setLocation(220,560);
 		jp1.add(btnReturn);
-		
+
 		JLabel cancelar = new JLabel("Cancelar");
 		cancelar.setFont(new Font("Open sans", Font.BOLD,20));
 		cancelar.setBounds(200,500,100,100);
 		cancelar.setBackground(Color.decode("#5ED6DF"));
 		cancelar.setForeground(Color.white);
 		jp1.add(cancelar);
-		
+
 		btnAccess.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				anterior = actual;
-				actual = "splash";
-				
+				actual = "main";
+
 				limpiarVentana();
-				
+
 			}
-			
+
 		});
-		
+
 		//this.add(jp1);
 		return jp1;
 	}
@@ -238,7 +245,7 @@ public class Ventana extends JFrame{
 	/////////////////////////////////////// MENU PRINCIPAL //////////////////////////////////////////////
 	
 	public JPanel menuPrincipal() {
-		
+
 		JPanel jp1 = new JPanel();
 		jp1.setSize(500, 700);
 		jp1.setLocation(0, 0);
@@ -255,52 +262,52 @@ public class Ventana extends JFrame{
 		contraseña.setBackground(Color.decode("#C45EDF"));
 		contraseña.setForeground(Color.white);
 		jp1.add(contraseña);
-		
+
 		ImageIcon imagen = new ImageIcon("Bienvenido.png");
 		JLabel tortuLogin = new JLabel();
 		tortuLogin.setBounds(225, 300, 250, 250);
 		tortuLogin.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(250,250,Image.SCALE_SMOOTH)));
 		tortuLogin.setBackground(Color.decode("#FFFFFF"));
 		jp1.add(tortuLogin);
-		
+
 		jp1.add(Menu());
 		this.setJMenuBar(Menu());
-		
+
 		return jp1;
 	}
 	
-	//////////////////////////////////////// MENU ///////////////////////////////////////////////////////
+	////////////////////////////////////////MENU ///////////////////////////////////////////////////////
 	
 	public JMenuBar Menu() {
-		
+
 		JMenuBar jmb1 = new JMenuBar();
 		JMenu jm1 = new JMenu("Cuenta");
 		JMenu jm2 = new JMenu("Usuarios");
 		JMenu jm3 = new JMenu("Ayuda");
-		
+
 		JMenuItem jmi1 = new JMenuItem("Editar mi cuenta");
 		JMenuItem jmi2 = new JMenuItem("Cerrar sesión");
 		JMenuItem jmi3 = new JMenuItem("Lista de usuarios");
 		JMenuItem jmi4 = new JMenuItem("Crear usuario");
 		JMenuItem jmi5 = new JMenuItem("¿Cómo crear usuarios?");
-		
+
 		jmb1.add(jm1);
 		jm1.add(jmi1);
 		jm1.add(jmi2);
-		
+
 		jmb1.add(jm2);
 		jm2.add(jmi3);
 		jm2.add(jmi4);
-		
+
 		jmb1.add(jm3);
 		jm3.add(jmi5);
-		
+
 		//ACTION LISTENERS JAJAJJAA
 		ActionListener accion1 = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				anterior = actual;
 				actual = "editar";
-				
+
 				limpiarVentana();
 			}
 		};
@@ -309,26 +316,26 @@ public class Ventana extends JFrame{
 						anterior = actual;
 						actual = "login";
 						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
-						
+
 						limpiarVentana();
 					}
 				};
 				jmi1.addActionListener(accion1);
 				jmi2.addActionListener(accion2);
-		
+
 		return jmb1;
 	}
 	
-	////////////////////////////////////////// EDITAR //////////////////////////////////////////////////
+	//////////////////////////////////////////EDITAR //////////////////////////////////////////////////
 	
 	public JPanel editar() {
-		
+
 		JPanel jp1 = new JPanel();
 		jp1.setSize(500, 700);
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#7AE9FF"));
-		
+
 		JLabel title = new JLabel("Cuenta personal",JLabel.CENTER);
 		title.setBounds(0, 50, 700, 40);
 		title.setFont(new Font("Open sans", Font.BOLD,40));
@@ -336,52 +343,52 @@ public class Ventana extends JFrame{
 		title.setBackground(Color.decode("#7AE9FF"));
 		title.setForeground(Color.white);
 		jp1.add(title);
-		
+
 		ImageIcon imagen = new ImageIcon("Cuenta.png");
 		JLabel tortu = new JLabel();
 		tortu.setBounds(250, 120, 200, 200);
 		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH)));
 		tortu.setBackground(Color.decode("#FFFFFF"));
 		jp1.add(tortu);
-		
+
 		JLabel nombre = new JLabel("Nombre: ",JLabel.LEFT);
 		nombre.setFont(new Font("Open sans", Font.BOLD,20));
 		nombre.setBounds(80,360,100,20);
 		jp1.add(nombre);
-		
+
 		JTextField nombreText = new JTextField("Nombre");
 		nombreText.setBounds(80, 380, 520, 30);
 		jp1.add(nombreText);
-		
+
 		JLabel apellidos = new JLabel("Apellidos: ",JLabel.LEFT);
 		apellidos.setFont(new Font("Open sans", Font.BOLD,20));
 		apellidos.setBounds(80,420,100,20);
 		jp1.add(apellidos);
-		
+
 		JTextField apellidosText = new JTextField("Apellidos");
 		apellidosText.setBounds(80, 440, 520, 30);
 		jp1.add(apellidosText);
-		
+
 		JLabel email = new JLabel("Email: ",JLabel.LEFT);
 		email.setFont(new Font("Open sans", Font.BOLD,20));
 		email.setBounds(80,480,100,20);
 		jp1.add(email);
-		
+
 		JTextField emailText = new JTextField("Email");
 		emailText.setBounds(80, 500, 520, 30);
 		jp1.add(emailText);
-		
+
 		JLabel contraseña = new JLabel("Contraseña: ",JLabel.LEFT);
 		contraseña.setFont(new Font("Open sans", Font.BOLD,20));
 		contraseña.setBounds(80,540,140,20);
 		jp1.add(contraseña);
-		
+
 		JTextField contraseñaText = new JTextField("Contraseña");
 		contraseñaText.setBounds(80, 560, 520, 30);
 		jp1.add(contraseñaText);
-		
-		
-		
+
+
+
 		ImageIcon logImagen = new ImageIcon("LogIn.png");
 		JButton btnAccess = new JButton();
 		btnAccess.setBackground(Color.decode("#00D5FF"));
@@ -390,13 +397,13 @@ public class Ventana extends JFrame{
 		btnAccess.setSize(60,60);
 		btnAccess.setLocation(540,640);
 		jp1.add(btnAccess);
-		
+
 		JLabel login = new JLabel("Adelante");
 		login.setFont(new Font("Open sans", Font.BOLD,20));
 		login.setBounds(540,580,100,100);
 		login.setForeground(Color.white);
 		jp1.add(login);
-		
+
 		ImageIcon returnImagen = new ImageIcon("Return.png");
 		JButton btnReturn = new JButton();
 		btnReturn.setBackground(Color.decode("#00D5FF"));
@@ -405,7 +412,7 @@ public class Ventana extends JFrame{
 		btnReturn.setSize(60,60);
 		btnReturn.setLocation(80,640);
 		jp1.add(btnReturn);
-		
+
 		btnReturn.addMouseListener(new MouseListener() {
 
 			public void mouseEntered(MouseEvent e) {
@@ -417,20 +424,20 @@ public class Ventana extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
-		
+
 		btnAccess.addMouseListener(new MouseListener() {
 
 			public void mouseEntered(MouseEvent e) {
@@ -442,17 +449,17 @@ public class Ventana extends JFrame{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 		JLabel returnn = new JLabel("Regresar");
@@ -461,7 +468,7 @@ public class Ventana extends JFrame{
 		//returnn.setBackground(Color.decode("#5ED6DF"));
 		returnn.setForeground(Color.white);
 		jp1.add(returnn);
-		
+
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 340, 600, 370);
 		jp2.setBackground(Color.decode("#00D5FF"));
@@ -481,13 +488,13 @@ public class Ventana extends JFrame{
 				String aux = anterior;
 				anterior = actual;
 				actual = aux;
-				
+
 				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
-				
+
 				limpiarVentana();
 			}
 		});
-		
+
 		return jp1;
 	}
 	
