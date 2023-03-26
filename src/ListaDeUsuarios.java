@@ -30,66 +30,8 @@ public class ListaDeUsuarios extends JTable {
 		
 		this.setFocusable(false);
 		
-		try {
-			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
-			String line = reader.readLine();
-
-			String[] lineArray = null;
-
-			data = new Object[getNumeroUsuarios()][columns.length];
-
-			int aux = 0;
-			
-			//añade los datos de la base de datos a la matriz data
-			while (line != null) {
-				lineArray = line.split(", ");
-
-				for (int i = 0; i < lineArray.length-3; i++) {
-					data[aux][i] = lineArray[i];
-				}
-
-				line = reader.readLine();
-				aux++;
-			}
-
-			reader.close();
-
-			table = new DefaultTableModel(data, columns);
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		crearTabla();
 		
-		this.setModel(table);
-		
-		//pasa las acciones realizadas por los botones
-		TablaEventos eventos = new TablaEventos() {
-			
-			@Override
-			public void eliminar(int row, JButton button) {
-				// TODO Auto-generated method stub
-				System.out.println("eliminar"+row);
-				int seleccion = JOptionPane.showConfirmDialog(button,
-						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
-						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-				
-				if(seleccion == 0) {
-					System.out.println("elimina usuario: "+row);
-					
-					eliminarUsuario(row);
-				}
-				
-			}
-			
-			@Override
-			public void editar(int row, JButton button) {
-				// TODO Auto-generated method stub
-				System.out.println("editar"+row);
-			}
-		};
-		
-		this.getColumnModel().getColumn(2).setCellRenderer(new ButtonRender());
-		this.getColumnModel().getColumn(2).setCellEditor(new EditorCeldas(eventos));
 	}
 
 	//obtiene el numero de usuarios que contiene la base de datos
@@ -161,7 +103,64 @@ public class ListaDeUsuarios extends JTable {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		crearTabla();
 	}
 
+	public void crearTabla() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+			String line = reader.readLine();
+
+			String[] lineArray = null;
+
+			data = new Object[getNumeroUsuarios()][columns.length];
+
+			int aux = 0;
+			
+			//añade los datos de la base de datos a la matriz data
+			while (line != null) {
+				lineArray = line.split(", ");
+
+				for (int i = 0; i < lineArray.length-3; i++) {
+					data[aux][i] = lineArray[i];
+				}
+
+				line = reader.readLine();
+				aux++;
+			}
+
+			reader.close();
+
+			table = new DefaultTableModel(data, columns);
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		this.setModel(table);
+
+		//pasa las acciones realizadas por el boton
+		TablaEventos eventos = new TablaEventos() {
+			
+			@Override
+			public void eliminar(int row, JButton button) {
+				// TODO Auto-generated method stub
+				int seleccion = JOptionPane.showConfirmDialog(button,
+						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
+						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+				
+				if(seleccion == 0)
+					eliminarUsuario(row);
+				
+			}
+			
+		};
+		
+		this.getColumnModel().getColumn(2).setCellRenderer(new ButtonRender());
+		this.getColumnModel().getColumn(2).setCellEditor(new EditorCeldas(eventos));
+		
+	}
+	
 }
 
