@@ -5,7 +5,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -19,6 +22,7 @@ public class Ventana extends JFrame{
 	private String anterior = "login";
 	private String actual = "login";
 	public JPanel panel = null;
+	private String usuario;
 	public JComboBox seleccionUsuario; 
 	public JButton boton;
 	
@@ -248,14 +252,57 @@ public class Ventana extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				
+				try {
+					BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+					String line = reader.readLine();
+					
+					String[] lineArray = null;
+					
+					String tempPassword = new String(password.getPassword());
+					usuario = username.getText();
+					
+					boolean match = false;
+					
+					while (line != null && match == false) {
+						lineArray = line.split(", ");
 
-				anterior = actual;
-				actual = "main";
+						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
+							match = true;
+							
+						}
+					
+						line = reader.readLine();
+					}
+					
+					reader.close();
+					
+					if(!match)
+						JOptionPane.showMessageDialog(jp1, "Error al iniciar sesion", "ERROR", JOptionPane.ERROR_MESSAGE);
+					else
+					{
+						anterior = actual;
+						actual = "main";
+						limpiarVentana();
+					}
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
 
-				limpiarVentana();
+				
 
 			}
 
+		});
+		
+		btnReturn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				cerrarVentana();
+			}
 		});
 
 		//this.add(jp1);
@@ -271,10 +318,8 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#C45EDF"));
-												/////////////////////////////////////////////
-												//CUANDO SE PUEDA COLOCAR NOMBRE LO PONEMOS//
-												/////////////////////////////////////////////
-		JLabel contraseña = new JLabel("BIENVENIDO"+"\n"+"@Nombre",JLabel.CENTER);
+
+		JLabel contraseña = new JLabel("BIENVENIDO "+" "+usuario,JLabel.CENTER);
 		contraseña.setFont(new Font("Open sans", Font.BOLD,40));
 		contraseña.setSize(700, 60);
 		contraseña.setLocation(0, 150);
@@ -533,7 +578,7 @@ public class Ventana extends JFrame{
 		contraseña.setBounds(80,540,140,20);
 		jp1.add(contraseña);
 
-		JTextField contraseñaText = new JTextField("Contraseña");
+		JPasswordField contraseñaText = new JPasswordField("Contraseña");
 		contraseñaText.setBounds(80, 560, 520, 30);
 		jp1.add(contraseñaText);
 
@@ -635,12 +680,16 @@ public class Ventana extends JFrame{
 		});
 		btnAccess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				anterior = actual;
-				actual = "main";
-
+			
+				actualizarUsuario(nombreText, apellidosText, emailText, contraseñaText);
+				
 				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
-
+				String aux = anterior;
+				anterior = actual;
+				actual = aux;
+				
 				limpiarVentana();
+
 			}
 		});
 
@@ -1170,6 +1219,61 @@ public class Ventana extends JFrame{
 		
 		
 		return jp1;
+	}
+	
+	public void actualizarUsuario(JTextField nombreText, JTextField apellidosText, 
+			JTextField emailText, JPasswordField contraseñaText) {
+		String archivo = "users.txt";
+		
+		try {
+			File archivoTemporal = new File("archivoTemporal");
+			BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal));
+			
+			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+			String line = reader.readLine();
+			
+			String[] lineArray = null;
+			
+			boolean match = false;
+
+			String contraseña = new String(contraseñaText.getPassword());
+			
+			String nuevosDatos = usuario+", "+
+					nombreText.getText()+", "+
+					apellidosText.getText()+", "+
+					emailText.getText()+", "+
+					contraseña;
+			
+			while (line != null) {
+				lineArray = line.split(", ");
+
+				if(!usuario.equals(lineArray[0])) {
+					writer.write(line);
+					writer.newLine();
+					
+				} else {
+					writer.write(nuevosDatos);
+					writer.newLine();
+				}
+			
+				line = reader.readLine();
+			}
+			
+			reader.close();
+			writer.close();
+			
+			File borrador = new File(archivo);
+			borrador.delete();
+			
+			archivoTemporal.renameTo(borrador);
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+	
+	public void cerrarVentana() {
+		this.dispose();
 	}
 	
 }
