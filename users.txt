@@ -7,3 +7,12 @@ KTAL, z, z, z, c
 KARLOBURRITO, z, z, z, c
 ZUMAYAGAY, z, z, z, c
 z, z, z, z, z
+a, a, a, ab, a
+b, b, b, bb, b
+c, c, c, cb, c
+d, d, d, db, d
+e, e, e, eb, e
+f, f, f, fb, f
+g, g, g, gb, g
+h, h, h, hb, h
+i, i, i, ib, i

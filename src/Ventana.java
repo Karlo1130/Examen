@@ -20,9 +20,10 @@ import javax.swing.table.DefaultTableModel;
 public class Ventana extends JFrame{
 
 	private String anterior = "login";
-	private String actual = "info";
+	private String actual = "login";
 	public JPanel panel = null;
 	private String usuario;
+	private String email;
 	public JComboBox seleccionUsuario; 
 	public JButton boton;
 	
@@ -274,6 +275,7 @@ public class Ventana extends JFrame{
 						lineArray = line.split(", ");
 
 						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
+							email = lineArray[3];
 							match = true;
 							
 						}
@@ -395,7 +397,6 @@ public class Ventana extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						anterior = actual;
 						actual = "tabla";
-						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
 
 						limpiarVentana();
 					}
@@ -404,7 +405,6 @@ public class Ventana extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						anterior = actual;
 						actual = "agregar";
-						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
 
 						limpiarVentana();
 					}
@@ -413,7 +413,6 @@ public class Ventana extends JFrame{
 					public void actionPerformed(ActionEvent e) {
 						anterior = actual;
 						actual = "info";
-						JOptionPane.showMessageDialog(null,"Sesión cerrada.");
 
 						limpiarVentana();
 					}
@@ -458,12 +457,12 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#7AE9FF"));
-		JScrollPane test = new JScrollPane(new ListaDeUsuarios());
+		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email));
 		test.setVisible(true);
 		test.setBounds(50,300,600,400);
 		jp1.add(test);
 		
-		String[] usuarios = new String[getNumeroUsuarios()];
+		String[] usuarios = new String[getNumeroUsuarios()-1];
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
@@ -475,9 +474,14 @@ public class Ventana extends JFrame{
 			while (line != null) {
 				lineArray = line.split(", ");
 				
-				usuarios[aux]= lineArray[0];
+				if (!lineArray[3].equals(email)) {
+					usuarios[aux]= lineArray[0];
+				}
 
-				aux++;
+				if (!lineArray[3].equals(email)) {
+					aux++;
+					}
+				
 				line = reader.readLine();
 			}
 			reader.close();
@@ -689,7 +693,6 @@ public class Ventana extends JFrame{
 			
 				actualizarUsuario(nombreText, apellidosText, emailText, contraseñaText);
 				
-				JOptionPane.showMessageDialog(null,"Datos actualizados con exito.");
 				String aux = anterior;
 				anterior = actual;
 				actual = aux;
@@ -881,7 +884,7 @@ public class Ventana extends JFrame{
 				anterior = actual;
 				actual = aux;
 
-				JOptionPane.showMessageDialog(null,"Usuario ingresado con exito.");
+				JOptionPane.showMessageDialog(null,"Usuario actualizado con exito.");
 
 				limpiarVentana();
 			}
@@ -1064,14 +1067,15 @@ public class Ventana extends JFrame{
 			}
 		});
 		btnAccess.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				anterior = actual;
-				actual = "main";
-
-				JOptionPane.showMessageDialog(null,"Usuario creado con exito.");
-
-				limpiarVentana();
-			}
+			public void actionPerformed(ActionEvent e) {				
+				if (nombreText != null && apellidosText != null&& emailText != null&& usuarioText != null&& contraseñaText != null && contraseñaText2 != null) {
+					CrearUsuario(nombreText, apellidosText, emailText, usuarioText, contraseñaText, contraseñaText2);					
+					JOptionPane.showMessageDialog(null,"Usuario ingresado con exito.");
+				}else {
+					JOptionPane.showMessageDialog(btnAccess,"E R R O R","Se produjo un error"+"\n"+"Ingrese bien los datos",JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}		
 		});
 
 		return jp1;
@@ -1112,6 +1116,8 @@ public class Ventana extends JFrame{
 		infoText.setForeground(Color.white);
 		infoText.setBackground(Color.decode("#00D5FF"));
 		infoText.setBounds(140, 260, 460, 260);
+		infoText.setBounds(140, 300, 460, 300);
+		infoText.setEditable(false);
 		infoText.setVisible(true);
 		jp1.add(infoText);
 		
@@ -1234,8 +1240,6 @@ public class Ventana extends JFrame{
 			String line = reader.readLine();
 			
 			String[] lineArray = null;
-			
-			boolean match = false;
 
 			String contraseña = new String(contraseñaText.getPassword());
 			
@@ -1271,6 +1275,80 @@ public class Ventana extends JFrame{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public void CrearUsuario(JTextField nombreText, JTextField apellidosText, 
+			JTextField emailText, JTextField usuarioText, JPasswordField contraseñaText, JPasswordField contraseñaText2) {
+		
+		String password = new String(contraseñaText.getPassword());
+		String password2 = new String(contraseñaText2.getPassword());
+		String datosUsuario = "";
+
+		boolean match = false;
+		
+//		System.out.println("\n"+password +"\n"+ password2
+//		+"\n"+ nombreText.getText()
+//		+"\n"+ apellidosText.getText()
+//		+"\n"+ emailText.getText()
+//		+"\n"+ usuarioText.getText());
+		
+		if(password.equals(password2) && password.length() != 0
+				&& nombreText.getText().length() != 0
+				&& apellidosText.getText().length() != 0
+				&& emailText.getText().length() != 0
+				&& usuarioText.getText().length() != 0) {
+			
+			try {
+				FileWriter writer = new FileWriter("users.txt", true);
+
+				BufferedWriter buffWriter = new BufferedWriter(writer);
+				
+				datosUsuario = nombreText.getText()+", "
+						+apellidosText.getText()+", "
+						+usuarioText.getText()+", "
+						+emailText.getText()+", "
+						+password;
+				
+				BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+				String line = reader.readLine();
+				
+				String[] lineArray = null;
+				
+				while (line != null) {
+					lineArray = line.split(", ");
+
+					if(emailText.getText().equals(lineArray[3])) {
+						match = true;
+					}
+				
+					line = reader.readLine();
+				}
+				reader.close();
+				
+				if(!match) {
+					buffWriter.write(datosUsuario);
+					buffWriter.newLine();
+					buffWriter.close();
+					JOptionPane.showMessageDialog(this, "Session created successfully", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+				
+					anterior = actual;
+					actual = "main";
+
+					limpiarVentana();
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Failed to register", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(this,"Failed to register", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 	public void cerrarVentana() {

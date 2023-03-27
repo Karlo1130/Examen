@@ -17,7 +17,7 @@ public class ListaDeUsuarios extends JTable {
 	private Object[][] data;
 	private DefaultTableModel table;
 	
-	public ListaDeUsuarios() {
+	public ListaDeUsuarios(String email) {
 
 		//cambia el tamaño de las filas
 		this.setRowHeight(40);
@@ -30,7 +30,7 @@ public class ListaDeUsuarios extends JTable {
 		
 		this.setFocusable(false);
 		
-		crearTabla();
+		crearTabla(email);
 		
 	}
 
@@ -67,7 +67,7 @@ public class ListaDeUsuarios extends JTable {
 		}
 	}
 	
-	public void eliminarUsuario(int numUsuarioEliminar) {
+	public void eliminarUsuario(int numUsuarioEliminar, String email) {
 		
 		String archivo = "users.txt";
 		
@@ -104,30 +104,34 @@ public class ListaDeUsuarios extends JTable {
 			e1.printStackTrace();
 		}
 		
-		crearTabla();
+		crearTabla(email);
 	}
 
-	public void crearTabla() {
+	public void crearTabla(String email) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
 			String line = reader.readLine();
 
 			String[] lineArray = null;
 
-			data = new Object[getNumeroUsuarios()][columns.length];
+			data = new Object[getNumeroUsuarios()-1][columns.length];
 
 			int aux = 0;
 			
 			//añade los datos de la base de datos a la matriz data
 			while (line != null) {
 				lineArray = line.split(", ");
-
 				for (int i = 0; i < lineArray.length-2; i++) {
-					data[aux][i] = lineArray[i];
+					
+					if (!lineArray[3].equals(email)) {
+						data[aux][i] = lineArray[i];
+					}
 				}
 
 				line = reader.readLine();
-				aux++;
+				if (!lineArray[3].equals(email)) {
+					aux++;
+					}
 			}
 
 			reader.close();
@@ -151,7 +155,7 @@ public class ListaDeUsuarios extends JTable {
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				
 				if(seleccion == 0)
-					eliminarUsuario(row);
+					eliminarUsuario(row, email);
 				
 			}
 			
@@ -163,4 +167,3 @@ public class ListaDeUsuarios extends JTable {
 	}
 	
 }
-
