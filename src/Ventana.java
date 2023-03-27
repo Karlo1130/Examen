@@ -270,7 +270,6 @@ public class Ventana extends JFrame{
 
 						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
 							email = lineArray[3];
-							System.out.print(email);
 							match = true;
 							
 						}
@@ -1068,14 +1067,10 @@ public class Ventana extends JFrame{
 			}
 		});
 		btnAccess.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				anterior = actual;
-				actual = "main";
-
-				JOptionPane.showMessageDialog(null,"Usuario creado con exito.");
-
-				limpiarVentana();
-			}
+			public void actionPerformed(ActionEvent e) {				
+				
+				CrearUsuario(nombreText, apellidosText, emailText, usuarioText, contraseñaText, contraseñaText2);
+			}		
 		});
 
 		return jp1;
@@ -1242,8 +1237,6 @@ public class Ventana extends JFrame{
 			String line = reader.readLine();
 			
 			String[] lineArray = null;
-			
-			boolean match = false;
 
 			String contraseña = new String(contraseñaText.getPassword());
 			
@@ -1279,6 +1272,81 @@ public class Ventana extends JFrame{
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+	
+	public void CrearUsuario(JTextField nombreText, JTextField apellidosText, 
+			JTextField emailText, JTextField usuarioText, JPasswordField contraseñaText, JPasswordField contraseñaText2) {
+		
+		String password = new String(contraseñaText.getPassword());
+		String password2 = new String(contraseñaText2.getPassword());
+		String datosUsuario = "";
+
+		boolean match = false;
+		
+//		System.out.println("\n"+password +"\n"+ password2
+//		+"\n"+ nombreText.getText()
+//		+"\n"+ apellidosText.getText()
+//		+"\n"+ emailText.getText()
+//		+"\n"+ usuarioText.getText());
+		
+		if(password.equals(password2) && password.length() != 0
+				&& nombreText.getText().length() != 0
+				&& apellidosText.getText().length() != 0
+				&& emailText.getText().length() != 0
+				&& usuarioText.getText().length() != 0) {
+			
+			try {
+				FileWriter writer = new FileWriter("users.txt", true);
+
+				BufferedWriter buffWriter = new BufferedWriter(writer);
+				
+				datosUsuario = nombreText.getText()+", "
+						+apellidosText.getText()+", "
+						+usuarioText.getText()+", "
+						+emailText.getText()+", "
+						+password;
+				
+				BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+				String line = reader.readLine();
+				
+				String[] lineArray = null;
+				
+				while (line != null) {
+					lineArray = line.split(", ");
+
+					if(emailText.getText().equals(lineArray[3])) {
+						System.out.print(emailText.getText());
+						match = true;
+					}
+				
+					line = reader.readLine();
+				}
+				reader.close();
+				
+				if(!match) {
+					buffWriter.write(datosUsuario);
+					buffWriter.newLine();
+					buffWriter.close();
+					JOptionPane.showMessageDialog(this, "Session created successfully", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+				
+					anterior = actual;
+					actual = "main";
+
+					limpiarVentana();
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Failed to register2", "ERROR", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(this,"Failed to register1", "ERROR", JOptionPane.ERROR_MESSAGE);
+		}
+		
 	}
 	
 	public void cerrarVentana() {
