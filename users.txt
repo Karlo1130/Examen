@@ -6,8 +6,4 @@ f, Pedro, Vargas, peva_21@alu.uabcs.mx, HolakarloQueAndasMIrandoMIContraseña
 KTAL, z, z, z, c
 KARLOBURRITO, z, z, z, c
 ZUMAYAGAY, z, z, z, c
-z, z, z, z
-z, z, z, z
-z, z, z, z
-z, z, z, z
-z, z, z, z
+z, z, z, z, z

@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class Ventana extends JFrame{
 
 	private String anterior = "login";
-	private String actual = "login";
+	private String actual = "info";
 	public JPanel panel = null;
 	private String usuario;
 	public JComboBox seleccionUsuario; 
@@ -58,16 +58,6 @@ public class Ventana extends JFrame{
 		if(panel!= null) {
 			this.remove(panel);
 		}
-		
-		if(actual.equals("splash")){
-			panel = splash(); 
-
-			this.add(panel);
-
-			this.repaint();
-			this.revalidate();
-		}
-		
 		if(actual.equals("login")){
 			panel = login(); 
 			
@@ -125,43 +115,7 @@ public class Ventana extends JFrame{
 			this.repaint();
 			this.revalidate();
 		}
-		
 	}
-	
-	///////////////////////////////////////// SPLASH  /////////////////////////////////////////////
-	
-	public JPanel splash() {
-
-		JPanel jp1 = new JPanel();
-		jp1.setSize(700, 800);
-		jp1.setLocation(0, 0);
-		jp1.setLayout(null);
-		jp1.setBackground(Color.decode("#5ED6DF"));
-
-		ImageIcon imagen = new ImageIcon("Tortu.png");
-		JLabel tortu = new JLabel();
-		tortu.setBounds(250, 100, 200, 200);
-		tortu.setIcon(new ImageIcon(imagen.getImage().getScaledInstance(200,200,Image.SCALE_SMOOTH)));
-		tortu.setBackground(Color.decode("#FFFFFF"));
-		jp1.add(tortu);
-
-		JProgressBar bar = new JProgressBar(0,10);
-		bar.setBounds(100,400,400,100);
-		jp1.add(bar);
-		
-		
-		if(bar.getValue() == 10) {
-			anterior = actual;
-			actual = "login";
-			limpiarVentana();
-
-			repaint();
-			revalidate();
-		}
-
-		return jp1;
-	}
-	
 	///////////////////////////////////////// LOG IN JAJAJA /////////////////////////////////////////////
 	
 	public JPanel login() {
@@ -219,33 +173,85 @@ public class Ventana extends JFrame{
 		jp1.add(password);
 
 
+		//BOTONES
 		ImageIcon logImagen = new ImageIcon("LogIn.png");
 		JButton btnAccess = new JButton();
+		btnAccess.setContentAreaFilled(false);
+		btnAccess.setOpaque(true);
+		btnAccess.setBackground(Color.decode("#5ED6DF"));
 		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnAccess.setSize(60,60);
-		btnAccess.setLocation(400,560);
+		btnAccess.setLocation(440,570);
 		jp1.add(btnAccess);
 
-		JLabel login = new JLabel("Ingresar");
+		JLabel login = new JLabel("Adelante",JLabel.RIGHT);
 		login.setFont(new Font("Open sans", Font.BOLD,20));
 		login.setBounds(400,500,100,100);
-		login.setBackground(Color.decode("#5ED6DF"));
 		login.setForeground(Color.white);
 		jp1.add(login);
-
+		
 		ImageIcon returnImagen = new ImageIcon("Return.png");
 		JButton btnReturn = new JButton();
+		btnReturn.setBackground(Color.decode("#5ED6DF"));
+		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setOpaque(true);
 		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnReturn.setSize(60,60);
-		btnReturn.setLocation(220,560);
+		btnReturn.setLocation(200,570);
 		jp1.add(btnReturn);
+		
+		JLabel returnn = new JLabel("Cancelar",JLabel.LEFT);
+		returnn.setFont(new Font("Open sans", Font.BOLD,20));
+		returnn.setBounds(200,500,100,100);
+		returnn.setForeground(Color.white);
+		jp1.add(returnn);
+		
+		btnReturn.addMouseListener(new MouseListener() {
+			public void mouseEntered(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnReturn.setBackground(Color.decode("#5ED6DF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
 
-		JLabel cancelar = new JLabel("Cancelar");
-		cancelar.setFont(new Font("Open sans", Font.BOLD,20));
-		cancelar.setBounds(200,500,100,100);
-		cancelar.setBackground(Color.decode("#5ED6DF"));
-		cancelar.setForeground(Color.white);
-		jp1.add(cancelar);
+		btnAccess.addMouseListener(new MouseListener() {
+
+			public void mouseEntered(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#02B6DA"));
+			}
+			public void mouseExited(MouseEvent e) {
+				btnAccess.setBackground(Color.decode("#5ED6DF"));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		btnAccess.addActionListener(new ActionListener() {
 
@@ -584,85 +590,85 @@ public class Ventana extends JFrame{
 
 
 
-		ImageIcon logImagen = new ImageIcon("LogIn.png");
-		JButton btnAccess = new JButton();
-		btnAccess.setBackground(Color.decode("#00D5FF"));
-		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
-		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
-		btnAccess.setSize(60,60);
-		btnAccess.setLocation(540,640);
-		jp1.add(btnAccess);
-
-		JLabel login = new JLabel("Adelante");
-		login.setFont(new Font("Open sans", Font.BOLD,20));
-		login.setBounds(540,580,100,100);
-		login.setForeground(Color.white);
-		jp1.add(login);
-
-		ImageIcon returnImagen = new ImageIcon("Return.png");
-		JButton btnReturn = new JButton();
-		btnReturn.setBackground(Color.decode("#00D5FF"));
-		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
-		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
-		btnReturn.setSize(60,60);
-		btnReturn.setLocation(80,640);
-		jp1.add(btnReturn);
-
-		btnReturn.addMouseListener(new MouseListener() {
-
-			public void mouseEntered(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#02B6DA"));
-			}
-			public void mouseExited(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#00D5FF"));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		btnAccess.addMouseListener(new MouseListener() {
-
-			public void mouseEntered(MouseEvent e) {
-				btnAccess.setBackground(Color.decode("#02B6DA"));
-			}
-			public void mouseExited(MouseEvent e) {
+		//BOTONES
+				ImageIcon logImagen = new ImageIcon("LogIn.png");
+				JButton btnAccess = new JButton();
+				btnAccess.setContentAreaFilled(false);
+				btnAccess.setOpaque(true);
 				btnAccess.setBackground(Color.decode("#00D5FF"));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+				btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+				btnAccess.setSize(60,60);
+				btnAccess.setLocation(540,640);
+				jp1.add(btnAccess);
 
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+				JLabel login = new JLabel("Adelante",JLabel.RIGHT);
+				login.setFont(new Font("Open sans", Font.BOLD,20));
+				login.setBounds(500,570,100,100);
+				login.setForeground(Color.white);
+				jp1.add(login);
+				
+				ImageIcon returnImagen = new ImageIcon("Return.png");
+				JButton btnReturn = new JButton();
+				btnReturn.setBackground(Color.decode("#00D5FF"));
+				btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+				btnReturn.setContentAreaFilled(false);
+				btnReturn.setOpaque(true);
+				btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+				btnReturn.setSize(60,60);
+				btnReturn.setLocation(80,640);
+				jp1.add(btnReturn);
+				
+				JLabel returnn = new JLabel("Cancelar",JLabel.LEFT);
+				returnn.setFont(new Font("Open sans", Font.BOLD,20));
+				returnn.setBounds(80,570,100,100);
+				returnn.setForeground(Color.white);
+				jp1.add(returnn);
+				
+				btnReturn.addMouseListener(new MouseListener() {
+					public void mouseEntered(MouseEvent e) {
+						btnReturn.setBackground(Color.decode("#02B6DA"));
+					}
+					public void mouseExited(MouseEvent e) {
+						btnReturn.setBackground(Color.decode("#00D5FF"));
+					}
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+				});
 
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+				btnAccess.addMouseListener(new MouseListener() {
 
-			}
-		});
-		JLabel returnn = new JLabel("Regresar");
-		returnn.setFont(new Font("Open sans", Font.BOLD,20));
-		returnn.setBounds(80,580,100,100);
-		//returnn.setBackground(Color.decode("#5ED6DF"));
-		returnn.setForeground(Color.white);
-		jp1.add(returnn);
+					public void mouseEntered(MouseEvent e) {
+						btnAccess.setBackground(Color.decode("#02B6DA"));
+					}
+					public void mouseExited(MouseEvent e) {
+						btnAccess.setBackground(Color.decode("#00D5FF"));
+					}
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+
+					}
+				});
 
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 340, 600, 370);
@@ -775,59 +781,58 @@ public class Ventana extends JFrame{
 		contraseñaText2.setBounds(80, 570, 520, 30);
 		jp1.add(contraseñaText2);
 
+		//BOTONES
 		ImageIcon logImagen = new ImageIcon("LogIn.png");
 		JButton btnAccess = new JButton();
-		btnAccess.setBackground(Color.decode("#00D5FF"));
-		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
+		btnAccess.setContentAreaFilled(false);
+		btnAccess.setOpaque(true);
+		btnAccess.setBackground(Color.decode("#7AE9FF"));
 		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnAccess.setSize(60,60);
-		btnAccess.setLocation(540,640);
+		btnAccess.setLocation(540,660);
 		jp1.add(btnAccess);
 
-		JLabel login = new JLabel("Adelante");
+		JLabel login = new JLabel("Adelante",JLabel.RIGHT);
 		login.setFont(new Font("Open sans", Font.BOLD,20));
-		login.setBounds(540,580,100,100);
+		login.setBounds(500,590,100,100);
 		login.setForeground(Color.white);
 		jp1.add(login);
-
+		
 		ImageIcon returnImagen = new ImageIcon("Return.png");
 		JButton btnReturn = new JButton();
-		btnReturn.setBackground(Color.decode("#00D5FF"));
+		btnReturn.setBackground(Color.decode("#7AE9FF"));
 		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setOpaque(true);
 		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnReturn.setSize(60,60);
-		btnReturn.setLocation(80,640);
+		btnReturn.setLocation(80,660);
 		jp1.add(btnReturn);
-
-		JLabel returnn = new JLabel("Regresar");
+		
+		JLabel returnn = new JLabel("Cancelar",JLabel.LEFT);
 		returnn.setFont(new Font("Open sans", Font.BOLD,20));
-		returnn.setBounds(80,580,100,100);
-		//returnn.setBackground(Color.decode("#5ED6DF"));
+		returnn.setBounds(80,590,100,100);
 		returnn.setForeground(Color.white);
 		jp1.add(returnn);
 		
 		btnReturn.addMouseListener(new MouseListener() {
-
 			public void mouseEntered(MouseEvent e) {
 				btnReturn.setBackground(Color.decode("#02B6DA"));
 			}
 			public void mouseExited(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#00D5FF"));
+				btnReturn.setBackground(Color.decode("#7AE9FF"));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -837,7 +842,7 @@ public class Ventana extends JFrame{
 				btnAccess.setBackground(Color.decode("#02B6DA"));
 			}
 			public void mouseExited(MouseEvent e) {
-				btnAccess.setBackground(Color.decode("#00D5FF"));
+				btnAccess.setBackground(Color.decode("#7AE9FF"));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -928,12 +933,12 @@ public class Ventana extends JFrame{
 		apellidosText.setBounds(80, 330, 520, 30);
 		jp1.add(apellidosText);
 		
-		JLabel usuario = new JLabel("Apellidos: ",JLabel.LEFT);
+		JLabel usuario = new JLabel("Usuario: ",JLabel.LEFT);
 		usuario.setFont(new Font("Open sans", Font.BOLD,20));
 		usuario.setBounds(80,370,100,20);
 		jp1.add(usuario);
 
-		JTextField usuarioText = new JTextField("Apellidos");
+		JTextField usuarioText = new JTextField("Usuario");
 		usuarioText.setBounds(80, 390, 520, 30);
 		jp1.add(usuarioText);
 
@@ -964,86 +969,85 @@ public class Ventana extends JFrame{
 		contraseñaText2.setBounds(80, 570, 520, 30);
 		jp1.add(contraseñaText2);
 
-		ImageIcon logImagen = new ImageIcon("LogIn.png");
-		JButton btnAccess = new JButton();
-		btnAccess.setBackground(Color.decode("#00D5FF"));
-		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
-		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
-		btnAccess.setSize(60,60);
-		btnAccess.setLocation(540,640);
-		jp1.add(btnAccess);
+		//BOTONES
+				ImageIcon logImagen = new ImageIcon("LogIn.png");
+				JButton btnAccess = new JButton();
+				btnAccess.setContentAreaFilled(false);
+				btnAccess.setOpaque(true);
+				btnAccess.setBackground(Color.decode("#7AE9FF"));
+				btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+				btnAccess.setSize(60,60);
+				btnAccess.setLocation(540,660);
+				jp1.add(btnAccess);
 
-		JLabel login = new JLabel("Adelante");
-		login.setFont(new Font("Open sans", Font.BOLD,20));
-		login.setBounds(540,580,100,100);
-		login.setForeground(Color.white);
-		jp1.add(login);
+				JLabel login = new JLabel("Adelante",JLabel.RIGHT);
+				login.setFont(new Font("Open sans", Font.BOLD,20));
+				login.setBounds(500,590,100,100);
+				login.setForeground(Color.white);
+				jp1.add(login);
+				
+				ImageIcon returnImagen = new ImageIcon("Return.png");
+				JButton btnReturn = new JButton();
+				btnReturn.setBackground(Color.decode("#7AE9FF"));
+				btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+				btnReturn.setContentAreaFilled(false);
+				btnReturn.setOpaque(true);
+				btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
+				btnReturn.setSize(60,60);
+				btnReturn.setLocation(80,660);
+				jp1.add(btnReturn);
+				
+				JLabel returnn = new JLabel("Cancelar",JLabel.LEFT);
+				returnn.setFont(new Font("Open sans", Font.BOLD,20));
+				returnn.setBounds(80,590,100,100);
+				returnn.setForeground(Color.white);
+				jp1.add(returnn);
+				
+				btnReturn.addMouseListener(new MouseListener() {
+					public void mouseEntered(MouseEvent e) {
+						btnReturn.setBackground(Color.decode("#02B6DA"));
+					}
+					public void mouseExited(MouseEvent e) {
+						btnReturn.setBackground(Color.decode("#7AE9FF"));
+					}
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+					}
+				});
 
-		ImageIcon returnImagen = new ImageIcon("Return.png");
-		JButton btnReturn = new JButton();
-		btnReturn.setBackground(Color.decode("#00D5FF"));
-		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
-		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
-		btnReturn.setSize(60,60);
-		btnReturn.setLocation(80,640);
-		jp1.add(btnReturn);
+				btnAccess.addMouseListener(new MouseListener() {
 
-		JLabel returnn = new JLabel("Regresar");
-		returnn.setFont(new Font("Open sans", Font.BOLD,20));
-		returnn.setBounds(80,580,100,100);
-		//returnn.setBackground(Color.decode("#5ED6DF"));
-		returnn.setForeground(Color.white);
-		jp1.add(returnn);
-		
-		btnReturn.addMouseListener(new MouseListener() {
+					public void mouseEntered(MouseEvent e) {
+						btnAccess.setBackground(Color.decode("#02B6DA"));
+					}
+					public void mouseExited(MouseEvent e) {
+						btnAccess.setBackground(Color.decode("#7AE9FF"));
+					}
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						// TODO Auto-generated method stub
 
-			public void mouseEntered(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#02B6DA"));
-			}
-			public void mouseExited(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#00D5FF"));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
+					}
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
 
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
 
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
-		btnAccess.addMouseListener(new MouseListener() {
-
-			public void mouseEntered(MouseEvent e) {
-				btnAccess.setBackground(Color.decode("#02B6DA"));
-			}
-			public void mouseExited(MouseEvent e) {
-				btnAccess.setBackground(Color.decode("#00D5FF"));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
+					}
+				});
 
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 240, 600, 380);
@@ -1107,65 +1111,62 @@ public class Ventana extends JFrame{
 		infoText.setFont(new Font("Open sans", Font.BOLD,22));
 		infoText.setForeground(Color.white);
 		infoText.setBackground(Color.decode("#00D5FF"));
-		infoText.setBounds(140, 300, 460, 300);
+		infoText.setBounds(140, 260, 460, 260);
 		infoText.setVisible(true);
 		jp1.add(infoText);
 		
-		
-		
+		//BOTONES
 		ImageIcon logImagen = new ImageIcon("LogIn.png");
 		JButton btnAccess = new JButton();
-		btnAccess.setBackground(Color.decode("#00D5FF"));
-		btnAccess.setBorder(new EmptyBorder(3,3,3,3));
+		btnAccess.setContentAreaFilled(false);
+		btnAccess.setOpaque(true);
+		btnAccess.setBackground(Color.decode("#7AE9FF"));
 		btnAccess.setIcon(new ImageIcon(logImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
-		btnAccess.setSize(60,60);
-		btnAccess.setLocation(540,640);
+		btnAccess.setSize(400,60);
+		btnAccess.setLocation(140,540);
 		jp1.add(btnAccess);
 
-		JLabel login = new JLabel("Adelante");
+		JLabel login = new JLabel("¡Crear usuario ahora!",JLabel.CENTER);
 		login.setFont(new Font("Open sans", Font.BOLD,20));
-		login.setBounds(540,580,100,100);
+		login.setBounds(140,480,400,100);
 		login.setForeground(Color.white);
 		jp1.add(login);
 		
 		ImageIcon returnImagen = new ImageIcon("Return.png");
 		JButton btnReturn = new JButton();
-		btnReturn.setBackground(Color.decode("#00D5FF"));
+		btnReturn.setBackground(Color.decode("#7AE9FF"));
 		btnReturn.setBorder(new EmptyBorder(3,3,3,3));
+		btnReturn.setContentAreaFilled(false);
+		btnReturn.setOpaque(true);
 		btnReturn.setIcon(new ImageIcon(returnImagen.getImage().getScaledInstance(60,60,Image.SCALE_SMOOTH)));
 		btnReturn.setSize(60,60);
-		btnReturn.setLocation(80,640);
+		btnReturn.setLocation(80,660);
 		jp1.add(btnReturn);
-
-		JLabel returnn = new JLabel("Regresar");
+		
+		JLabel returnn = new JLabel("Cancelar",JLabel.LEFT);
 		returnn.setFont(new Font("Open sans", Font.BOLD,20));
-		returnn.setBounds(80,580,100,100);
-		//returnn.setBackground(Color.decode("#5ED6DF"));
+		returnn.setBounds(80,590,100,100);
 		returnn.setForeground(Color.white);
 		jp1.add(returnn);
 		
 		btnReturn.addMouseListener(new MouseListener() {
-
 			public void mouseEntered(MouseEvent e) {
 				btnReturn.setBackground(Color.decode("#02B6DA"));
 			}
 			public void mouseExited(MouseEvent e) {
-				btnReturn.setBackground(Color.decode("#00D5FF"));
+				btnReturn.setBackground(Color.decode("#7AE9FF"));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 
@@ -1175,7 +1176,7 @@ public class Ventana extends JFrame{
 				btnAccess.setBackground(Color.decode("#02B6DA"));
 			}
 			public void mouseExited(MouseEvent e) {
-				btnAccess.setBackground(Color.decode("#00D5FF"));
+				btnAccess.setBackground(Color.decode("#7AE9FF"));
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
