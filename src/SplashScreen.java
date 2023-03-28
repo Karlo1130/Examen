@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 
@@ -10,7 +9,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 
 public class SplashScreen extends JFrame {
@@ -83,24 +81,7 @@ public class SplashScreen extends JFrame {
     
     public void setProgress(int value) {
         progressBar.setValue(value);
-        mover = value;
         tortuLogin.setLocation((value+10)* 5,375);
     }
     
-    public void setMessage(String message) {
-        progressBar.setString(message);
-    }
-    
-    /*public static void main(String[] args) {
-        SplashScreen splashScreen = new SplashScreen();
-        for (int i = 0; i <= 100; i++) {
-            splashScreen.setProgress(i);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        splashScreen.dispose();
-    }*/
 }

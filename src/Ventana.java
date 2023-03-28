@@ -13,9 +13,6 @@ import java.io.IOException;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
 
 public class Ventana extends JFrame{
 
