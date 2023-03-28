@@ -16,9 +16,11 @@ public class ListaDeUsuarios extends JTable {
 	private String[] columns = {"Usuario", "Nombre", "Acciones"};
 	private Object[][] data;
 	private DefaultTableModel table;
+	private int posicionUsuario;
 	
-	public ListaDeUsuarios() {
+	public ListaDeUsuarios(String email, int posicionUsuario) {
 
+		this.posicionUsuario = posicionUsuario;
 		//cambia el tamaño de las filas
 		this.setRowHeight(40);
 		this.setSelectionBackground(Color.green);
@@ -30,7 +32,7 @@ public class ListaDeUsuarios extends JTable {
 		
 		this.setFocusable(false);
 		
-		crearTabla();
+		crearTabla(email);
 		
 	}
 
@@ -67,7 +69,7 @@ public class ListaDeUsuarios extends JTable {
 		}
 	}
 	
-	public void eliminarUsuario(int numUsuarioEliminar) {
+	public void eliminarUsuario(int numUsuarioEliminar, String email) {
 		
 		String archivo = "users.txt";
 		
@@ -82,6 +84,9 @@ public class ListaDeUsuarios extends JTable {
 			
 			//copia los datos en un nuevo archivo menos el del usuario especificado
 			while (line != null) {
+				
+				if(numeroUsuario == posicionUsuario)
+					numUsuarioEliminar++;
 				
 				if (numeroUsuario != numUsuarioEliminar) {
 					writer.write(line);
@@ -104,30 +109,38 @@ public class ListaDeUsuarios extends JTable {
 			e1.printStackTrace();
 		}
 		
-		crearTabla();
+		crearTabla(email);
 	}
 
-	public void crearTabla() {
+	public void crearTabla(String email) {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
 			String line = reader.readLine();
 
 			String[] lineArray = null;
 
-			data = new Object[getNumeroUsuarios()][columns.length];
+			data = new Object[getNumeroUsuarios()-1][columns.length];
+			System.out.print("num: ");
+			System.out.println(getNumeroUsuarios()-1);
 
 			int aux = 0;
 			
 			//añade los datos de la base de datos a la matriz data
 			while (line != null) {
 				lineArray = line.split(", ");
-
-				for (int i = 0; i < lineArray.length-2; i++) {
-					data[aux][i] = lineArray[i];
+				for (int i = 0; i < lineArray.length-3; i++) {
+					
+					if (!lineArray[3].equals(email)) {
+						data[aux][i] = lineArray[i];
+					}else {
+						System.out.println(lineArray[3]);						
+					}
 				}
 
 				line = reader.readLine();
-				aux++;
+				if (!lineArray[3].equals(email)) {
+					aux++;
+					}
 			}
 
 			reader.close();
@@ -150,9 +163,12 @@ public class ListaDeUsuarios extends JTable {
 						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				
-				if(seleccion == 0)
-					eliminarUsuario(row);
+				System.out.println(row);
 				
+				if(seleccion == 0) {
+					
+					eliminarUsuario(row, email);
+				}
 			}
 			
 		};
@@ -163,4 +179,3 @@ public class ListaDeUsuarios extends JTable {
 	}
 	
 }
-
