@@ -2,5 +2,4 @@ usuario, nombre, apellido, email, contraseña
 Kalsier, Karlo, Espinoza, kaes_21@alu.uabcs.mx, karlocontra
 00Doncan, Pedro, Vargas, peva_21@alu.uabcs.mx, Pedrocontra
 Jona, Jonathan, NoMeAcuerdo, profe_21@alu.uabcs.mx, profecontra
-a, usuarioDePrueba, prueba, prueba@alu.uabcs.mx, a
 b, usuarioDePrueba, pruebab, prueba2@alu.uabcs.mx, b

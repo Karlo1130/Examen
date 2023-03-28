@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,9 +17,12 @@ public class ListaDeUsuarios extends JTable {
 	private Object[][] data;
 	private DefaultTableModel table;
 	private int posicionUsuario;
+	private String email;
 	
-	public ListaDeUsuarios(String email, int posicionUsuario) {
+	public ListaDeUsuarios(String email) {
 
+		this.email = email;
+		
 		this.posicionUsuario = posicionUsuario;
 		//cambia el tamaño de las filas
 		this.setRowHeight(40);
@@ -30,7 +35,7 @@ public class ListaDeUsuarios extends JTable {
 		
 		this.setFocusable(false);
 		
-		crearTabla(email);
+		crearTabla();
 		
 	}
 
@@ -67,7 +72,7 @@ public class ListaDeUsuarios extends JTable {
 		}
 	}
 	
-	public void eliminarUsuario(int numUsuarioEliminar, String email) {
+	public void eliminarUsuario(int numUsuarioEliminar) {
 		
 		String archivo = "users.txt";
 		
@@ -82,9 +87,6 @@ public class ListaDeUsuarios extends JTable {
 			
 			//copia los datos en un nuevo archivo menos el del usuario especificado
 			while (line != null) {
-				
-				if(numeroUsuario == posicionUsuario)
-					numUsuarioEliminar++;
 				
 				if (numeroUsuario != numUsuarioEliminar) {
 					writer.write(line);
@@ -107,19 +109,17 @@ public class ListaDeUsuarios extends JTable {
 			e1.printStackTrace();
 		}
 		
-		crearTabla(email);
+		crearTabla();
 	}
 
-	public void crearTabla(String email) {
+	public void crearTabla() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
 			String line = reader.readLine();
 
 			String[] lineArray = null;
 
-			data = new Object[getNumeroUsuarios()-1][columns.length];
-			System.out.print("num: ");
-			System.out.println(getNumeroUsuarios()-1);
+			data = new Object[getNumeroUsuarios()][columns.length];
 
 			int aux = 0;
 			
@@ -128,17 +128,12 @@ public class ListaDeUsuarios extends JTable {
 				lineArray = line.split(", ");
 				for (int i = 0; i < lineArray.length-3; i++) {
 					
-					if (!lineArray[3].equals(email)) {
-						data[aux][i] = lineArray[i];
-					}else {
-						System.out.println(lineArray[3]);						
-					}
+					data[aux][i] = lineArray[i];
+
 				}
 
 				line = reader.readLine();
-				if (!lineArray[3].equals(email)) {
-					aux++;
-					}
+				aux++;
 			}
 
 			reader.close();
@@ -157,6 +152,10 @@ public class ListaDeUsuarios extends JTable {
 			@Override
 			public void eliminar(int row, JButton button) {
 				// TODO Auto-generated method stub
+				if (row == 4) {
+					button.setEnabled(true);
+				}
+				
 				int seleccion = JOptionPane.showConfirmDialog(button,
 						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
@@ -165,7 +164,7 @@ public class ListaDeUsuarios extends JTable {
 				
 				if(seleccion == 0) {
 					
-					eliminarUsuario(row, email);
+					eliminarUsuario(row);
 				}
 			}
 			
@@ -176,4 +175,4 @@ public class ListaDeUsuarios extends JTable {
 		
 	}
 	
-}
+}	

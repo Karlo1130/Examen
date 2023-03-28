@@ -422,12 +422,12 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#7AE9FF"));
-		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email, posicionUsuario));
+		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email));
 		test.setVisible(true);
 		test.setBounds(50,300,600,400);
 		jp1.add(test);
 		
-		String[] usuarios = new String[getNumeroUsuarios()-1];
+		String[] usuarios = new String[getNumeroUsuarios()];
 
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
@@ -439,13 +439,9 @@ public class Ventana extends JFrame{
 			while (line != null) {
 				lineArray = line.split(", ");
 				
-				if (!lineArray[3].equals(email)) {
-					usuarios[aux]= lineArray[0];
-				}
+				usuarios[aux]= lineArray[0];
 
-				if (!lineArray[3].equals(email)) {
-					aux++;
-					}
+				aux++;
 				
 				line = reader.readLine();
 			}
