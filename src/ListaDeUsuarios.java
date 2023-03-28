@@ -16,9 +16,11 @@ public class ListaDeUsuarios extends JTable {
 	private String[] columns = {"Usuario", "Nombre", "Acciones"};
 	private Object[][] data;
 	private DefaultTableModel table;
+	private int posicionUsuario;
 	
-	public ListaDeUsuarios(String email) {
+	public ListaDeUsuarios(String email, int posicionUsuario) {
 
+		this.posicionUsuario = posicionUsuario;
 		//cambia el tamaño de las filas
 		this.setRowHeight(40);
 		this.setSelectionBackground(Color.green);
@@ -83,6 +85,9 @@ public class ListaDeUsuarios extends JTable {
 			//copia los datos en un nuevo archivo menos el del usuario especificado
 			while (line != null) {
 				
+				if(numeroUsuario == posicionUsuario)
+					numUsuarioEliminar++;
+				
 				if (numeroUsuario != numUsuarioEliminar) {
 					writer.write(line);
 					writer.newLine();
@@ -115,16 +120,20 @@ public class ListaDeUsuarios extends JTable {
 			String[] lineArray = null;
 
 			data = new Object[getNumeroUsuarios()-1][columns.length];
+			System.out.print("num: ");
+			System.out.println(getNumeroUsuarios()-1);
 
 			int aux = 0;
 			
 			//añade los datos de la base de datos a la matriz data
 			while (line != null) {
 				lineArray = line.split(", ");
-				for (int i = 0; i < lineArray.length-2; i++) {
+				for (int i = 0; i < lineArray.length-3; i++) {
 					
 					if (!lineArray[3].equals(email)) {
 						data[aux][i] = lineArray[i];
+					}else {
+						System.out.println(lineArray[3]);						
 					}
 				}
 
@@ -154,9 +163,12 @@ public class ListaDeUsuarios extends JTable {
 						"Estas seguro que deseas eliminarlo?", "Eliminar Usuario", 
 						JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				
-				if(seleccion == 0)
-					eliminarUsuario(row, email);
+				System.out.println(row);
 				
+				if(seleccion == 0) {
+					
+					eliminarUsuario(row, email);
+				}
 			}
 			
 		};

@@ -24,6 +24,7 @@ public class Ventana extends JFrame{
 	public JPanel panel = null;
 	private String usuario;
 	private String email;
+	private int posicionUsuario;
 	public JComboBox seleccionUsuario; 
 	public JButton boton;
 	
@@ -36,21 +37,8 @@ public class Ventana extends JFrame{
 		this.setTitle("Hola zumaya :D");
 		this.setSize(700, 800);
 		
-		
-		/*repaint();
-		revalidate();
-		int cont = 5000;
-		for (int i=0; i<cont+1;i++) {
-			if (i >= cont) {
-				actual = "login";
-				cont = -1;
-			}
-		}*/
-		
 		limpiarVentana();
-		/*JScrollPane test = new JScrollPane(new ListaDeUsuarios());
-		this.add(test);
-		*/
+
 		this.repaint();
 		this.revalidate();
 	}
@@ -154,7 +142,7 @@ public class Ventana extends JFrame{
 		nombre.setForeground(Color.white);
 		jp1.add(nombre);
 
-		JTextField username = new JTextField("Usuario");
+		JTextField username = new JTextField();
 		username.setSize(300,30);
 		username.setLocation(200, 370);
 		jp1.add(username);
@@ -168,7 +156,7 @@ public class Ventana extends JFrame{
 		contraseña.setForeground(Color.white);
 		jp1.add(contraseña);
 
-		JPasswordField password = new JPasswordField("Contraseña");
+		JPasswordField password = new JPasswordField();
 		password.setSize(300, 30);
 		password.setLocation(200, 460);
 		jp1.add(password);
@@ -270,16 +258,18 @@ public class Ventana extends JFrame{
 					usuario = username.getText();
 					
 					boolean match = false;
+					int aux = 0;
 					
 					while (line != null && match == false) {
 						lineArray = line.split(", ");
 
 						if(usuario.equals(lineArray[0]) && tempPassword.equals(lineArray[4])) {
 							email = lineArray[3];
+							posicionUsuario  = aux;
 							match = true;
 							
 						}
-					
+						aux++;
 						line = reader.readLine();
 					}
 					
@@ -425,29 +415,7 @@ public class Ventana extends JFrame{
 
 		return jmb1;
 	}
-	//////////////////////////////////////// ALGO EXTRA /////////////////////////////////////////////////
-	public int getNumeroUsuarios() {
-
-		int numLines = 0;
-
-		try {
-			BufferedReader readerCounter = new BufferedReader(new FileReader("users.txt"));
-			String lineCounter = readerCounter.readLine();
-
-			while(lineCounter!=null) {
-				numLines++;
-				lineCounter = readerCounter.readLine();
-			}
-
-			readerCounter.close();
-
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		} 
-
-		return numLines;
-
-	}
+	
 	/////////////////////////////////// TABLAAAAAAAAAAAAAA /////////////////////////////////////////////
 	
 	public JPanel pantallaTabla() {
@@ -457,7 +425,7 @@ public class Ventana extends JFrame{
 		jp1.setLocation(0, 0);
 		jp1.setLayout(null);
 		jp1.setBackground(Color.decode("#7AE9FF"));
-		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email));
+		JScrollPane test = new JScrollPane(new ListaDeUsuarios(email, posicionUsuario));
 		test.setVisible(true);
 		test.setBounds(50,300,600,400);
 		jp1.add(test);
@@ -494,7 +462,6 @@ public class Ventana extends JFrame{
 		seleccionUsuario.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
 		seleccionUsuario.setMaximumRowCount(6);
 		seleccionUsuario.setVisible(true);
-		//seleccionUsuario.addActionListener(this);
 		jp1.add(seleccionUsuario);
 		
 		boton = new JButton();
@@ -502,7 +469,6 @@ public class Ventana extends JFrame{
 		boton.setBounds(75, 250, 550, 40);
 		boton.setVisible(true);
 		boton.setFont(new Font("Comic Sans MS", Font.PLAIN, 32));
-		//boton.addActionListener(this);
 		jp1.add(boton);
 
 		seleccionUsuario.addActionListener(new ActionListener(){
@@ -561,7 +527,7 @@ public class Ventana extends JFrame{
 		nombre.setBounds(80,360,100,20);
 		jp1.add(nombre);
 
-		JTextField nombreText = new JTextField("Nombre");
+		JTextField nombreText = new JTextField();
 		nombreText.setBounds(80, 380, 520, 30);
 		jp1.add(nombreText);
 
@@ -570,7 +536,7 @@ public class Ventana extends JFrame{
 		apellidos.setBounds(80,420,100,20);
 		jp1.add(apellidos);
 
-		JTextField apellidosText = new JTextField("Apellidos");
+		JTextField apellidosText = new JTextField();
 		apellidosText.setBounds(80, 440, 520, 30);
 		jp1.add(apellidosText);
 
@@ -579,7 +545,7 @@ public class Ventana extends JFrame{
 		email.setBounds(80,480,100,20);
 		jp1.add(email);
 
-		JTextField emailText = new JTextField("Email");
+		JTextField emailText = new JTextField();
 		emailText.setBounds(80, 500, 520, 30);
 		jp1.add(emailText);
 
@@ -588,7 +554,7 @@ public class Ventana extends JFrame{
 		contraseña.setBounds(80,540,140,20);
 		jp1.add(contraseña);
 
-		JPasswordField contraseñaText = new JPasswordField("Contraseña");
+		JPasswordField contraseñaText = new JPasswordField();
 		contraseñaText.setBounds(80, 560, 520, 30);
 		jp1.add(contraseñaText);
 
@@ -677,7 +643,6 @@ public class Ventana extends JFrame{
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 340, 600, 370);
 		jp2.setBackground(Color.decode("#00D5FF"));
-		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
 		jp1.add(jp2);
 
 		btnReturn.addActionListener(new ActionListener() {
@@ -735,7 +700,7 @@ public class Ventana extends JFrame{
 		nombre.setBounds(80,250,100,20);
 		jp1.add(nombre);
 
-		JTextField nombreText = new JTextField("Nombre");
+		JTextField nombreText = new JTextField();
 		nombreText.setBounds(80, 270, 520, 30);
 		jp1.add(nombreText);
 
@@ -744,16 +709,16 @@ public class Ventana extends JFrame{
 		apellidos.setBounds(80,310,100,20);
 		jp1.add(apellidos);
 
-		JTextField apellidosText = new JTextField("Apellidos");
+		JTextField apellidosText = new JTextField();
 		apellidosText.setBounds(80, 330, 520, 30);
 		jp1.add(apellidosText);
 		
-		JLabel usuario = new JLabel("Apellidos: ",JLabel.LEFT);
+		JLabel usuario = new JLabel("Usuario: ",JLabel.LEFT);
 		usuario.setFont(new Font("Open sans", Font.BOLD,20));
 		usuario.setBounds(80,370,100,20);
 		jp1.add(usuario);
 
-		JTextField usuarioText = new JTextField("Apellidos");
+		JTextField usuarioText = new JTextField();
 		usuarioText.setBounds(80, 390, 520, 30);
 		jp1.add(usuarioText);
 
@@ -762,7 +727,7 @@ public class Ventana extends JFrame{
 		email.setBounds(80,430,100,20);
 		jp1.add(email);
 
-		JTextField emailText = new JTextField("Email");
+		JTextField emailText = new JTextField();
 		emailText.setBounds(80, 450, 520, 30);
 		jp1.add(emailText);
 
@@ -771,7 +736,7 @@ public class Ventana extends JFrame{
 		contraseña.setBounds(80,490,140,20);
 		jp1.add(contraseña);
 
-		JPasswordField contraseñaText = new JPasswordField("Contraseña");
+		JPasswordField contraseñaText = new JPasswordField();
 		contraseñaText.setBounds(80, 510, 520, 30);
 		jp1.add(contraseñaText);
 		
@@ -780,7 +745,7 @@ public class Ventana extends JFrame{
 		contraseña2.setBounds(80,550,220,20);
 		jp1.add(contraseña2);
 
-		JPasswordField contraseñaText2 = new JPasswordField("Contraseña");
+		JPasswordField contraseñaText2 = new JPasswordField();
 		contraseñaText2.setBounds(80, 570, 520, 30);
 		jp1.add(contraseñaText2);
 
@@ -867,7 +832,6 @@ public class Ventana extends JFrame{
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 240, 600, 380);
 		jp2.setBackground(Color.decode("#00D5FF"));
-		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
 		jp1.add(jp2);
 
 		btnReturn.addActionListener(new ActionListener() {
@@ -923,7 +887,7 @@ public class Ventana extends JFrame{
 		nombre.setBounds(80,250,100,20);
 		jp1.add(nombre);
 
-		JTextField nombreText = new JTextField("Nombre");
+		JTextField nombreText = new JTextField();
 		nombreText.setBounds(80, 270, 520, 30);
 		jp1.add(nombreText);
 
@@ -932,7 +896,7 @@ public class Ventana extends JFrame{
 		apellidos.setBounds(80,310,100,20);
 		jp1.add(apellidos);
 
-		JTextField apellidosText = new JTextField("Apellidos");
+		JTextField apellidosText = new JTextField();
 		apellidosText.setBounds(80, 330, 520, 30);
 		jp1.add(apellidosText);
 		
@@ -941,7 +905,7 @@ public class Ventana extends JFrame{
 		usuario.setBounds(80,370,100,20);
 		jp1.add(usuario);
 
-		JTextField usuarioText = new JTextField("Usuario");
+		JTextField usuarioText = new JTextField();
 		usuarioText.setBounds(80, 390, 520, 30);
 		jp1.add(usuarioText);
 
@@ -950,7 +914,7 @@ public class Ventana extends JFrame{
 		email.setBounds(80,430,100,20);
 		jp1.add(email);
 
-		JTextField emailText = new JTextField("Email");
+		JTextField emailText = new JTextField();
 		emailText.setBounds(80, 450, 520, 30);
 		jp1.add(emailText);
 
@@ -959,7 +923,7 @@ public class Ventana extends JFrame{
 		contraseña.setBounds(80,490,140,20);
 		jp1.add(contraseña);
 
-		JPasswordField contraseñaText = new JPasswordField("Contraseña");
+		JPasswordField contraseñaText = new JPasswordField();
 		contraseñaText.setBounds(80, 510, 520, 30);
 		jp1.add(contraseñaText);
 		
@@ -968,7 +932,7 @@ public class Ventana extends JFrame{
 		contraseña2.setBounds(80,550,220,20);
 		jp1.add(contraseña2);
 
-		JPasswordField contraseñaText2 = new JPasswordField("Contraseña");
+		JPasswordField contraseñaText2 = new JPasswordField();
 		contraseñaText2.setBounds(80, 570, 520, 30);
 		jp1.add(contraseñaText2);
 
@@ -1055,7 +1019,6 @@ public class Ventana extends JFrame{
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(40, 240, 600, 380);
 		jp2.setBackground(Color.decode("#00D5FF"));
-		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
 		jp1.add(jp2);
 
 		btnReturn.addActionListener(new ActionListener() {
@@ -1068,12 +1031,7 @@ public class Ventana extends JFrame{
 		});
 		btnAccess.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				if (nombreText != null && apellidosText != null&& emailText != null&& usuarioText != null&& contraseñaText != null && contraseñaText2 != null) {
-					CrearUsuario(nombreText, apellidosText, emailText, usuarioText, contraseñaText, contraseñaText2);					
-					JOptionPane.showMessageDialog(null,"Usuario ingresado con exito.");
-				}else {
-					JOptionPane.showMessageDialog(btnAccess,"E R R O R","Se produjo un error"+"\n"+"Ingrese bien los datos",JOptionPane.ERROR_MESSAGE);
-				}
+				CrearUsuario(nombreText, apellidosText, emailText, usuarioText, contraseñaText, contraseñaText2);
 				
 			}		
 		});
@@ -1204,7 +1162,6 @@ public class Ventana extends JFrame{
 		JPanel jp2 = new JPanel();
 		jp2.setBounds(100, 240, 500, 380);
 		jp2.setBackground(Color.decode("#00D5FF"));
-		//jp2.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED),"Hola",TitledBorder.CENTER,TitledBorder.DEFAULT_POSITION));
 		jp1.add(jp2);
 
 		btnReturn.addActionListener(new ActionListener() {
@@ -1232,48 +1189,60 @@ public class Ventana extends JFrame{
 			JTextField emailText, JPasswordField contraseñaText) {
 		String archivo = "users.txt";
 		
-		try {
-			File archivoTemporal = new File("archivoTemporal");
-			BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal));
-			
-			BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
-			String line = reader.readLine();
-			
-			String[] lineArray = null;
+		String password = new String(contraseñaText.getPassword());
+		
+		if(password.length() != 0
+				&& nombreText.getText().length() != 0
+				&& apellidosText.getText().length() != 0
+				&& emailText.getText().length() != 0) {
 
-			String contraseña = new String(contraseñaText.getPassword());
-			
-			String nuevosDatos = usuario+", "+
-					nombreText.getText()+", "+
-					apellidosText.getText()+", "+
-					emailText.getText()+", "+
-					contraseña;
-			
-			while (line != null) {
-				lineArray = line.split(", ");
+			try {
+				File archivoTemporal = new File("archivoTemporal");
+				BufferedWriter writer = new BufferedWriter(new FileWriter(archivoTemporal));
 
-				if(!usuario.equals(lineArray[0])) {
-					writer.write(line);
-					writer.newLine();
-					
-				} else {
-					writer.write(nuevosDatos);
-					writer.newLine();
+				BufferedReader reader = new BufferedReader(new FileReader("users.txt"));
+				String line = reader.readLine();
+
+				String[] lineArray = null;
+
+				String contraseña = new String(contraseñaText.getPassword());
+
+				String nuevosDatos = usuario+", "+
+						nombreText.getText()+", "+
+						apellidosText.getText()+", "+
+						emailText.getText()+", "+
+						contraseña;
+
+				while (line != null) {
+					lineArray = line.split(", ");
+
+					if(!usuario.equals(lineArray[0])) {
+						writer.write(line);
+						writer.newLine();
+
+					} else {
+						writer.write(nuevosDatos);
+						writer.newLine();
+					}
+
+					line = reader.readLine();
 				}
-			
-				line = reader.readLine();
-			}
-			
-			reader.close();
-			writer.close();
-			
-			File borrador = new File(archivo);
-			borrador.delete();
-			
-			archivoTemporal.renameTo(borrador);
 
-		} catch (IOException e1) {
-			e1.printStackTrace();
+				reader.close();
+				writer.close();
+
+				File borrador = new File(archivo);
+				borrador.delete();
+
+				archivoTemporal.renameTo(borrador);
+
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Error al registrar", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -1285,12 +1254,6 @@ public class Ventana extends JFrame{
 		String datosUsuario = "";
 
 		boolean match = false;
-		
-//		System.out.println("\n"+password +"\n"+ password2
-//		+"\n"+ nombreText.getText()
-//		+"\n"+ apellidosText.getText()
-//		+"\n"+ emailText.getText()
-//		+"\n"+ usuarioText.getText());
 		
 		if(password.equals(password2) && password.length() != 0
 				&& nombreText.getText().length() != 0
@@ -1329,7 +1292,7 @@ public class Ventana extends JFrame{
 					buffWriter.write(datosUsuario);
 					buffWriter.newLine();
 					buffWriter.close();
-					JOptionPane.showMessageDialog(this, "Session created successfully", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Cuenta creada con exito", "Listo!", JOptionPane.INFORMATION_MESSAGE);
 				
 					anterior = actual;
 					actual = "main";
@@ -1337,7 +1300,7 @@ public class Ventana extends JFrame{
 					limpiarVentana();
 				}
 				else {
-					JOptionPane.showMessageDialog(this, "Failed to register", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, "Error al registrar", "Error", JOptionPane.ERROR_MESSAGE);
 				}
 				
 			} catch (IOException e1) {
@@ -1346,9 +1309,32 @@ public class Ventana extends JFrame{
 			}
 		}
 		else {
-			JOptionPane.showMessageDialog(this,"Failed to register", "ERROR", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Error al registrar", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	public int getNumeroUsuarios() {
+
+		int numLines = 0;
+
+		try {
+			BufferedReader readerCounter = new BufferedReader(new FileReader("users.txt"));
+			String lineCounter = readerCounter.readLine();
+
+			while(lineCounter!=null) {
+				numLines++;
+				lineCounter = readerCounter.readLine();
+			}
+
+			readerCounter.close();
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} 
+
+		return numLines;
+
 	}
 	
 	public void cerrarVentana() {
